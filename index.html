@@ -76,7 +76,8 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: var(--f); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+body { font-family: var(--f); font-size: 16px; line-height: 1.6; overflow-x: hidden; background: var(--dark); }
+html.light-mode body { background: var(--light); }
 
 /* ─── NAV (light) ────────────────────────────── */
 nav {
@@ -5584,9 +5585,15 @@ html.light-mode .testi-role { color: #666; }
   resize();
   requestAnimationFrame(draw);
 
-  // Ambient pulses from hub nodes every 3–5s
-  setInterval(ambientPulse, 3200);
-  setTimeout(ambientPulse, 800);
+  // Ambient pulses from hub nodes every 2s + random grid point every 4s
+  setInterval(ambientPulse, 2000);
+  setInterval(() => {
+    const c = Math.floor(Math.random() * cols);
+    const r = Math.floor(Math.random() * rows);
+    spawnPulse(c, r, 0.22);
+  }, 4000);
+  setTimeout(ambientPulse, 600);
+  setTimeout(ambientPulse, 1800);
 
   window.addEventListener('resize', resize);
 })();
