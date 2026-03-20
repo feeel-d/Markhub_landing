@@ -5586,14 +5586,15 @@ html.light-mode .testi-role { color: #666; }
   requestAnimationFrame(draw);
 
   // Ambient pulses from hub nodes every 2s + random grid point every 4s
-  setInterval(ambientPulse, 2000);
+  setInterval(ambientPulse, 1200);
   setInterval(() => {
     const c = Math.floor(Math.random() * cols);
     const r = Math.floor(Math.random() * rows);
     spawnPulse(c, r, 0.22);
-  }, 4000);
-  setTimeout(ambientPulse, 600);
-  setTimeout(ambientPulse, 1800);
+  }, 2500);
+  setTimeout(ambientPulse, 400);
+  setTimeout(ambientPulse, 900);
+  setTimeout(ambientPulse, 1600);
 
   window.addEventListener('resize', resize);
 })();
