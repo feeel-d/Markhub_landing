@@ -5870,10 +5870,20 @@ document.querySelectorAll('.mock-tab').forEach(t => {
     }
   }
 
+  // cache section metrics to avoid recalculating on every scroll (prevents mobile jump)
+  let _sectionTop = 0, _total = 1;
+  function cacheSectionMetrics() {
+    _sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    _total = Math.max(1, section.offsetHeight - vh);
+  }
+  cacheSectionMetrics();
+  window.addEventListener('resize', cacheSectionMetrics, { passive: true });
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', cacheSectionMetrics);
+
   function onScroll() {
-    const rect  = section.getBoundingClientRect();
-    const total = section.offsetHeight - window.innerHeight;
-    const prog  = Math.max(0, Math.min(1, -rect.top / total));
+    const scrolled = window.scrollY - _sectionTop;
+    const prog  = Math.max(0, Math.min(1, scrolled / _total));
 
     // scroll cue
     cue.classList.toggle('hidden', prog > 0.04);
