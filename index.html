@@ -2028,6 +2028,13 @@ canvas.flow-canvas {
   background: var(--dborder); border-radius: 16px; overflow: hidden;
   border: 1px solid var(--dborder);
 }
+.price-grid-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+.pc-amt {
+  display: inline-block;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
 .price-card {
   background: var(--dark2); padding: 32px 24px;
   position: relative; display: flex; flex-direction: column;
@@ -2799,7 +2806,8 @@ nav .nav-links a.nav-active { color: var(--dtxt) !important; }
 
   /* ── PRICING PAGE ── */
   #page-pricing .page-wrap { padding: 80px 20px 60px; }
-  .price-grid {
+  .price-grid,
+  .price-grid-5 {
     grid-template-columns: 1fr;
     border-radius: 8px;
   }
@@ -2855,6 +2863,7 @@ nav .nav-links a.nav-active { color: var(--dtxt) !important; }
   .maki-grid { gap: 32px; }
 
   .price-grid { grid-template-columns: 1fr 1fr; }
+  .price-grid-5 { grid-template-columns: 1fr 1fr; }
   .price-roi-inner { flex-wrap: wrap; }
   .roi-stat { flex: 1 1 40%; }
 
@@ -7206,32 +7215,83 @@ if (logoBtn && overlay) {
 })();
 
 // ── Pricing toggle ──
-document.querySelectorAll('.pt-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.pt-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const annual = btn.dataset.period === 'annual';
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.pt-btn');
+  if (!btn) return;
+  document.querySelectorAll('.pt-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const annual = btn.dataset.period === 'annual';
 
-    // Update price amounts with fade animation
-    document.querySelectorAll('.pc-amt[data-monthly]').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(-6px)';
-      setTimeout(() => {
-        el.textContent = '$' + (annual ? el.dataset.annual : el.dataset.monthly);
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      }, 150);
-    });
+  // annual: 슬롯머신처럼 드르르르륵 숫자 내려오다가 멈춤
+  const annual2 = annual;
+  // monthly로 돌릴 때 기존 배지 제거
+  if (!annual2) document.querySelectorAll('.pc-discount-badge').forEach(b => b.remove());
+  document.querySelectorAll('.pc-amt[data-monthly]').forEach(el => {
+    const start = parseInt(annual2 ? el.dataset.monthly : el.dataset.annual);
+    const end   = parseInt(annual2 ? el.dataset.annual  : el.dataset.monthly);
+    if (isNaN(start) || isNaN(end)) return;
 
-    // Toggle /mo → /yr
-    document.querySelectorAll('.pc-per[data-per]').forEach(el => {
-      el.textContent = annual ? '/mo*' : '/mo';
-    });
+    const duration = 600;
+    const fps = 60;
+    const steps = Math.round(duration / (1000 / fps));
+    let step = 0;
 
-    // Show/hide annual note
-    document.querySelectorAll('.pc-annual-note').forEach(el => {
-      el.style.opacity = annual ? '1' : '0';
-    });
+    el.style.transition = 'none';
+
+    const tick = () => {
+      step++;
+      const progress = step / steps;
+      const eased = 1 - Math.pow(2, -10 * progress);
+      const current = Math.round(start + (end - start) * eased);
+      el.textContent = '$' + current;
+      if (step < steps) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = '$' + end;
+      }
+    };
+    requestAnimationFrame(tick);
+
+    // -$n 디밍 배지 (annual로 전환 시에만)
+    if (annual2 && !isNaN(start) && !isNaN(end) && end < start) {
+      const diff = start - end;
+      const badge = document.createElement('span');
+      badge.className = 'pc-discount-badge';
+      badge.textContent = '-$' + diff;
+      badge.style.cssText = `
+        position: absolute;
+        font-size: 11px;
+        font-weight: 400;
+        color: #FF6B6B;
+        opacity: 0;
+        transform: translateY(0px);
+        transition: opacity 0.2s ease, transform 0.4s ease;
+        pointer-events: none;
+        margin-left: 6px;
+        font-family: 'Poppins', sans-serif;
+        letter-spacing: 0.02em;
+      `;
+      el.style.position = 'relative';
+      el.parentElement.style.position = 'relative';
+      el.insertAdjacentElement('afterend', badge);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          badge.style.opacity = '0.6';
+          badge.style.transform = 'translateY(-6px)';
+        });
+      });
+    }
+  });
+
+  // Toggle /mo text
+  document.querySelectorAll('.pc-per').forEach(el => {
+    el.textContent = annual ? '/mo*' : '/mo';
+  });
+
+  // Show/hide annual note
+  document.querySelectorAll('.pc-annual-note').forEach(el => {
+    el.style.opacity = annual ? '1' : '0';
   });
 });
 
@@ -7316,12 +7376,14 @@ document.querySelectorAll('.pt-btn').forEach(btn => {
   });
 
   // FAQ accordion on pricing page
-  document.querySelectorAll('.pfaq-item').forEach(item => {
-    item.querySelector('.pfaq-q').addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.pfaq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    });
+  document.addEventListener('click', function(e) {
+    const q = e.target.closest('.pfaq-q');
+    if (!q) return;
+    const item = q.closest('.pfaq-item');
+    if (!item) return;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.pfaq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
   });
 })();
 
@@ -8027,49 +8089,72 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="page-header">
     <div class="eyebrow">Pricing</div>
     <h1>Simple. <span>No per-seat tricks.</span></h1>
-    <p class="sub">Members are free. You pay for AI usage, the part that actually saves time.</p>
+    <p class="sub">One price per workspace. Unlimited teammates. You pay for AI, not headcount.</p>
     <div class="price-toggle" id="priceToggle">
       <button class="pt-btn active" data-period="monthly">Monthly</button>
       <button class="pt-btn" data-period="annual">Annual <span class="pt-save">Save 20%</span></button>
     </div>
   </div>
 
-  <div class="price-grid">
+  <div class="price-grid price-grid-5">
 
     <div class="price-card">
       <div class="pc-name">Free</div>
       <div class="pc-price"><span class="pc-amt">$0</span></div>
-      <div class="pc-desc">Try the magic. No credit card.</div>
+      <div class="pc-desc">Start light. Stay focused.</div>
       <ul class="pc-list">
         <li><span class="pc-check">✓</span> Up to 5 members</li>
-        <li><span class="pc-check">✓</span> 1 hub</li>
-        <li><span class="pc-check">✓</span> Chat AI, 100 task extractions</li>
-        <li><span class="pc-check">✓</span> Meeting AI, 5 calls/mo</li>
-        <li><span class="pc-check">✓</span> AI Agent, 10 runs/mo</li>
-        <li><span class="pc-check">✓</span> 90-day history</li>
-        <li><span class="pc-x">✕</span> 1:1 calls only (10 min max)</li>
+        <li><span class="pc-check">✓</span> Hubs: up to 3</li>
+        <li><span class="pc-check">✓</span> Chat AI: 100/mo</li>
+        <li><span class="pc-check">✓</span> Meeting AI: 10/mo</li>
+        <li><span class="pc-check">✓</span> AI Agent: 50/mo</li>
+        <li><span class="pc-check">✓</span> Calls: 3 participants, 30min</li>
+        <li><span class="pc-check">✓</span> Guests: 3</li>
+        <li><span class="pc-check">✓</span> History: 90 days</li>
       </ul>
-      <button class="pc-btn pc-btn-ghost">Get started free</button>
+      <a href="https://app.markhub.ai" target="_blank" class="pc-btn pc-btn-ghost">Get started free</a>
     </div>
 
-    <div class="price-card pc-featured">
-      <div class="pc-badge">Most popular</div>
+    <div class="price-card">
       <div class="pc-name">Pro</div>
       <div class="pc-price">
         <span class="pc-amt" data-monthly="19" data-annual="15">$19</span>
         <span class="pc-per">/mo</span>
       </div>
-      <div class="pc-desc">For growing teams that move fast.</div>
+      <div class="pc-desc">Work smarter, not louder.</div>
       <ul class="pc-list">
-        <li><span class="pc-check">✓</span> Unlimited members</li>
-        <li><span class="pc-check">✓</span> 3 hubs</li>
-        <li><span class="pc-check">✓</span> Chat AI, unlimited</li>
-        <li><span class="pc-check">✓</span> Meeting AI, 100 calls/mo</li>
-        <li><span class="pc-check">✓</span> AI Agent, 150 runs/mo</li>
-        <li><span class="pc-check">✓</span> Group calls up to 15</li>
-        <li><span class="pc-check">✓</span> API access</li>
-        <li><span class="pc-check">✓</span> Unlimited history</li>
-        <li class="pc-extra">Extra meetings: $0.50/call</li>
+        <li><span class="pc-check">✓</span> Team: Unlimited</li>
+        <li><span class="pc-check">✓</span> Hubs: up to 10</li>
+        <li><span class="pc-check">✓</span> Chat AI: Unlimited</li>
+        <li><span class="pc-check">✓</span> Meeting AI: 100/mo</li>
+        <li><span class="pc-check">✓</span> AI Agent: 300/mo + $0.05/overage</li>
+        <li><span class="pc-check">✓</span> Calls: 15 participants, ∞min</li>
+        <li><span class="pc-check">✓</span> Guests: 10</li>
+        <li><span class="pc-check">✓</span> History: Unlimited</li>
+        <li><span class="pc-check">✓</span> API Access</li>
+      </ul>
+      <a href="https://app.markhub.ai" target="_blank" class="pc-btn pc-btn-ghost">Start free trial</a>
+    </div>
+
+    <div class="price-card pc-featured">
+      <div class="pc-badge">Most popular</div>
+      <div class="pc-name">Growth</div>
+      <div class="pc-price">
+        <span class="pc-amt" data-monthly="49" data-annual="39">$49</span>
+        <span class="pc-per">/mo</span>
+      </div>
+      <div class="pc-desc">Built for teams that move fast.</div>
+      <ul class="pc-list">
+        <li><span class="pc-check">✓</span> Team: Unlimited</li>
+        <li><span class="pc-check">✓</span> Hubs: Unlimited</li>
+        <li><span class="pc-check">✓</span> Chat AI: Unlimited</li>
+        <li><span class="pc-check">✓</span> Meeting AI: 200/mo</li>
+        <li><span class="pc-check">✓</span> AI Agent: 1,000/mo + $0.03/overage</li>
+        <li><span class="pc-check">✓</span> Calls: 30 participants, ∞min</li>
+        <li><span class="pc-check">✓</span> Guests: 30</li>
+        <li><span class="pc-check">✓</span> History: Unlimited</li>
+        <li><span class="pc-check">✓</span> API Access</li>
+        <li><span class="pc-check">✓</span> Priority Support</li>
       </ul>
       <a href="https://app.markhub.ai" target="_blank" class="pc-btn pc-btn-primary">Start free trial</a>
     </div>
@@ -8080,17 +8165,18 @@ document.addEventListener('DOMContentLoaded', function() {
         <span class="pc-amt" data-monthly="99" data-annual="79">$99</span>
         <span class="pc-per">/mo</span>
       </div>
-      <div class="pc-desc">For teams that run on conversations.</div>
+      <div class="pc-desc">Scale with confidence.</div>
       <ul class="pc-list">
-        <li><span class="pc-check">✓</span> Unlimited members</li>
-        <li><span class="pc-check">✓</span> Unlimited hubs</li>
-        <li><span class="pc-check">✓</span> Chat AI, unlimited</li>
-        <li><span class="pc-check">✓</span> Meeting AI, 300 calls/mo</li>
-        <li><span class="pc-check">✓</span> AI Agent, 500 runs/mo</li>
-        <li><span class="pc-check">✓</span> Group calls up to 50</li>
-        <li><span class="pc-check">✓</span> SSO + Admin controls</li>
-        <li><span class="pc-check">✓</span> Priority support</li>
-        <li class="pc-extra">Extra meetings: $0.30/call</li>
+        <li><span class="pc-check">✓</span> Team: Unlimited</li>
+        <li><span class="pc-check">✓</span> Hubs: Unlimited</li>
+        <li><span class="pc-check">✓</span> Chat AI: Unlimited</li>
+        <li><span class="pc-check">✓</span> Meeting AI: 500/mo</li>
+        <li><span class="pc-check">✓</span> AI Agent: Unlimited</li>
+        <li><span class="pc-check">✓</span> Calls: 50 participants, ∞min</li>
+        <li><span class="pc-check">✓</span> History: Unlimited</li>
+        <li><span class="pc-check">✓</span> SSO/SAML + SCIM</li>
+        <li><span class="pc-check">✓</span> API Access</li>
+        <li><span class="pc-check">✓</span> Priority Support</li>
       </ul>
       <button class="pc-btn pc-btn-ghost">Talk to sales</button>
     </div>
@@ -8098,14 +8184,16 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="price-card">
       <div class="pc-name">Enterprise</div>
       <div class="pc-price"><span class="pc-amt">Custom</span></div>
-      <div class="pc-desc">Outcome-based pricing for large teams.</div>
+      <div class="pc-desc">Secure scale. Custom control.</div>
       <ul class="pc-list">
         <li><span class="pc-check">✓</span> Everything in Business</li>
-        <li><span class="pc-check">✓</span> Unlimited Meeting AI</li>
-        <li><span class="pc-check">✓</span> Unlimited AI Agent</li>
-        <li><span class="pc-check">✓</span> Custom integrations</li>
+        <li><span class="pc-check">✓</span> Meeting AI: Unlimited</li>
+        <li><span class="pc-check">✓</span> AI Agent: Unlimited</li>
+        <li><span class="pc-check">✓</span> SSO/SAML + SCIM</li>
+        <li><span class="pc-check">✓</span> DLP & Retention policies</li>
+        <li><span class="pc-check">✓</span> API Access</li>
         <li><span class="pc-check">✓</span> Dedicated CSM</li>
-        <li><span class="pc-check">✓</span> Outcome-based billing option</li>
+        <li><span class="pc-check">✓</span> Priority Support</li>
       </ul>
       <button class="pc-btn pc-btn-ghost">Contact us</button>
     </div>
