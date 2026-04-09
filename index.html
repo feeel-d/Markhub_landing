@@ -2221,6 +2221,32 @@ nav .nav-links a.nav-active { color: var(--dtxt) !important; }
 .roi-l { font-size: 11px; color: var(--dtxt3); line-height: 1.45; }
 .roi-div { width: 1px; background: var(--dborder); }
 
+/* ── Enterprise horizontal banner ── */
+.pc-enterprise-banner {
+  display: flex; align-items: center; gap: 40px;
+  margin-top: 1px;
+  background: var(--dark2);
+  border: 1px solid var(--dborder);
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  padding: 28px 36px;
+}
+.pc-ent-left { flex-shrink: 0; min-width: 160px; }
+.pc-ent-price {
+  font-size: 36px; font-weight: 300; letter-spacing: -2px;
+  color: var(--dtxt); margin-bottom: 4px;
+}
+.pc-ent-desc { font-size: 12px; color: var(--dtxt3); line-height: 1.5; }
+.pc-ent-features {
+  flex: 1; display: flex; flex-wrap: wrap; gap: 10px 32px;
+}
+.pc-ent-item {
+  font-size: 12px; color: var(--dtxt2); font-weight: 300;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+}
+.pc-ent-right { flex-shrink: 0; }
+
 /* ── FOOTNOTE ── */
 .footnote {
   margin-top: 40px; text-align: center;
@@ -8089,7 +8115,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 
-  <div class="price-grid price-grid-5">
+  <div class="price-grid">
 
     <div class="price-card">
       <div class="pc-name">Free</div>
@@ -8174,23 +8200,28 @@ document.addEventListener('DOMContentLoaded', function() {
       <button class="pc-btn pc-btn-ghost">Talk to sales</button>
     </div>
 
-    <div class="price-card">
-      <div class="pc-name">Enterprise</div>
-      <div class="pc-price"><span class="pc-amt">Custom</span></div>
-      <div class="pc-desc">Secure scale. Custom control.</div>
-      <ul class="pc-list">
-        <li><span class="pc-check">✓</span> Everything in Business</li>
-        <li><span class="pc-check">✓</span> Meeting AI: Unlimited</li>
-        <li><span class="pc-check">✓</span> AI Agent: Unlimited</li>
-        <li><span class="pc-check">✓</span> SSO/SAML + SCIM</li>
-        <li><span class="pc-check">✓</span> DLP & Retention policies</li>
-        <li><span class="pc-check">✓</span> API Access</li>
-        <li><span class="pc-check">✓</span> Dedicated CSM</li>
-        <li><span class="pc-check">✓</span> Priority Support</li>
-      </ul>
-      <button class="pc-btn pc-btn-ghost">Contact us</button>
-    </div>
+  </div>
 
+  <!-- Enterprise horizontal banner -->
+  <div class="pc-enterprise-banner">
+    <div class="pc-ent-left">
+      <div class="pc-name">Enterprise</div>
+      <div class="pc-ent-price">Custom</div>
+      <div class="pc-ent-desc">Secure scale. Custom control.</div>
+    </div>
+    <div class="pc-ent-features">
+      <div class="pc-ent-item"><span class="pc-check">✓</span> Everything in Business</div>
+      <div class="pc-ent-item"><span class="pc-check">✓</span> Meeting AI: Unlimited</div>
+      <div class="pc-ent-item"><span class="pc-check">✓</span> AI Agent: Unlimited</div>
+      <div class="pc-ent-item"><span class="pc-check">✓</span> SSO/SAML + SCIM</div>
+      <div class="pc-ent-item"><span class="pc-check">✓</span> DLP & Retention policies</div>
+      <div class="pc-ent-item"><span class="pc-check">✓</span> Dedicated CSM</div>
+      <div class="pc-ent-item"><span class="pc-check">✓</span> Priority Support</div>
+      <div class="pc-ent-item"><span class="pc-check">✓</span> On-premise option</div>
+    </div>
+    <div class="pc-ent-right">
+      <button class="pc-btn pc-btn-ghost" style="width:auto;padding:12px 32px;">Contact us →</button>
+    </div>
   </div>
 
   <div class="price-roi">
