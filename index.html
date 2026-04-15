@@ -3038,6 +3038,35 @@ nav .nav-links a.nav-active { color: var(--dtxt) !important; }
   }
   .steps::before { display: none; }
 
+  /* ── INTEGRATIONS mobile ── */
+  #integrations { padding: 64px 24px !important; }
+  #integrations [style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  #integrations [style*="padding:24px"] {
+    padding: 14px !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  #integrations [style*="width:40px;height:40px"] {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  /* ── PRICING mobile ── */
+  #pricing { padding: 64px 24px !important; }
+  #pricing [style*="grid-template-columns:repeat(5,1fr)"] {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    border-radius: 12px !important;
+  }
+
+  /* ── PROBLEM 3-col → 1-col ── */
+  #problem [style*="grid-template-columns:1fr 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
   /* ── FAQ ── */
   .faq-q-t { font-size: 14px; }
 
@@ -3346,6 +3375,7 @@ html.light-mode #integrations { background: var(--dark) !important; }
 html.light-mode #integrations [style*="background:rgba(255,255,255,0.03)"] { background: #FFFFFF !important; }
 html.light-mode #integrations [style*="background:rgba(255,255,255,0.06)"] { background: #F0F0F0 !important; }
 html.light-mode #integrations [style*="color:#f0f0f0"] { color: #111 !important; }
+html.light-mode .int-icon-gh { color: #111 !important; }
 
 /* Pricing light mode */
 html.light-mode #pricing { background: var(--dark) !important; }
@@ -5250,8 +5280,8 @@ html.light-mode .testi-role { color: #666; }
 
       <!-- GitHub -->
       <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;display:flex;align-items:flex-start;gap:14px;">
-        <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#f0f0f0" d="M12 .5C5.649.5.5 5.649.5 12A11.5 11.5 0 0 0 8.36 22.066c.575.106.785-.25.785-.555 0-.274-.01-1-.016-1.962-3.181.691-3.853-1.533-3.853-1.533-.52-1.321-1.27-1.673-1.27-1.673-1.039-.71.079-.695.079-.695 1.149.081 1.753 1.18 1.753 1.18 1.02 1.75 2.677 1.245 3.329.952.103-.739.4-1.245.727-1.531-2.54-.289-5.213-1.27-5.213-5.654 0-1.249.446-2.271 1.177-3.071-.118-.289-.51-1.452.112-3.026 0 0 .96-.307 3.146 1.173A10.97 10.97 0 0 1 12 6.03c.978.004 1.963.132 2.883.388 2.184-1.48 3.143-1.173 3.143-1.173.624 1.574.232 2.737.114 3.026.733.8 1.175 1.822 1.175 3.071 0 4.394-2.677 5.361-5.225 5.644.411.353.777 1.05.777 2.117 0 1.529-.014 2.761-.014 3.137 0 .308.207.667.79.554A11.503 11.503 0 0 0 23.5 12C23.5 5.649 18.351.5 12 .5Z"/></svg>
+        <div class="int-icon-gh" style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#f0f0f0;">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5C5.649.5.5 5.649.5 12A11.5 11.5 0 0 0 8.36 22.066c.575.106.785-.25.785-.555 0-.274-.01-1-.016-1.962-3.181.691-3.853-1.533-3.853-1.533-.52-1.321-1.27-1.673-1.27-1.673-1.039-.71.079-.695.079-.695 1.149.081 1.753 1.18 1.753 1.18 1.02 1.75 2.677 1.245 3.329.952.103-.739.4-1.245.727-1.531-2.54-.289-5.213-1.27-5.213-5.654 0-1.249.446-2.271 1.177-3.071-.118-.289-.51-1.452.112-3.026 0 0 .96-.307 3.146 1.173A10.97 10.97 0 0 1 12 6.03c.978.004 1.963.132 2.883.388 2.184-1.48 3.143-1.173 3.143-1.173.624 1.574.232 2.737.114 3.026.733.8 1.175 1.822 1.175 3.071 0 4.394-2.677 5.361-5.225 5.644.411.353.777 1.05.777 2.117 0 1.529-.014 2.761-.014 3.137 0 .308.207.667.79.554A11.503 11.503 0 0 0 23.5 12C23.5 5.649 18.351.5 12 .5Z"/></svg>
         </div>
         <div>
           <div style="font-size:14px;font-weight:500;color:#f0f0f0;margin-bottom:4px;">GitHub</div>
@@ -7785,9 +7815,9 @@ if (overlay) {
             <div style="width:32px;height:32px;border-radius:50%;background:${p.color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;">${p.init}</div>
             <div style="font-size:9px;color:#ccc;font-weight:500;">${p.name}</div>
             <div style="display:flex;align-items:center;gap:2px;">
-              <span style="width:2px;height:6px;background:${p === PROFILES[0] ? '#3BAD65' : '#555'};border-radius:1px;animation:${p === PROFILES[0] ? 'hamVolume 0.8s ease infinite' : 'none'};"></span>
-              <span style="width:2px;height:9px;background:${p === PROFILES[0] ? '#3BAD65' : '#555'};border-radius:1px;animation:${p === PROFILES[0] ? 'hamVolume 0.8s ease 0.1s infinite' : 'none'};"></span>
-              <span style="width:2px;height:5px;background:${p === PROFILES[0] ? '#3BAD65' : '#555'};border-radius:1px;animation:${p === PROFILES[0] ? 'hamVolume 0.8s ease 0.2s infinite' : 'none'};"></span>
+              <span style="width:2px;height:6px;background:${(p === PROFILES[0] || p === PROFILES[1]) ? '#3BAD65' : '#555'};border-radius:1px;animation:${(p === PROFILES[0] || p === PROFILES[1]) ? 'hamVolume 0.8s ease infinite' : 'none'};"></span>
+              <span style="width:2px;height:9px;background:${(p === PROFILES[0] || p === PROFILES[1]) ? '#3BAD65' : '#555'};border-radius:1px;animation:${(p === PROFILES[0] || p === PROFILES[1]) ? 'hamVolume 0.8s ease 0.1s infinite' : 'none'};"></span>
+              <span style="width:2px;height:5px;background:${(p === PROFILES[0] || p === PROFILES[1]) ? '#3BAD65' : '#555'};border-radius:1px;animation:${(p === PROFILES[0] || p === PROFILES[1]) ? 'hamVolume 0.8s ease 0.2s infinite' : 'none'};"></span>
             </div>
           </div>
         `).join('')}
@@ -7808,30 +7838,18 @@ if (overlay) {
     chatBody.appendChild(callUI);
 
     // Simulate speaking indicators changing
-    after(1200, () => {
-      // Simulate Jein speaking
+    function setSpeaking(indices) {
       const avatars = callUI.querySelectorAll('[style*="grid-template"]>div');
-      if (avatars[1]) {
-        const bars = avatars[1].querySelectorAll('span[style*="width:3px"]');
-        bars.forEach((b,i) => { b.style.background = '#3BAD65'; b.style.animation = `hamVolume 0.8s ease ${i*0.1}s infinite`; });
-      }
-      if (avatars[0]) {
-        const bars = avatars[0].querySelectorAll('span[style*="width:3px"]');
-        bars.forEach(b => { b.style.background = '#555'; b.style.animation = 'none'; });
-      }
-    });
-    after(2400, () => {
-      // Minh speaking
-      const avatars = callUI.querySelectorAll('[style*="grid-template"]>div');
-      if (avatars[2]) {
-        const bars = avatars[2].querySelectorAll('span[style*="width:3px"]');
-        bars.forEach((b,i) => { b.style.background = '#3BAD65'; b.style.animation = `hamVolume 0.8s ease ${i*0.1}s infinite`; });
-      }
-      if (avatars[1]) {
-        const bars = avatars[1].querySelectorAll('span[style*="width:3px"]');
-        bars.forEach(b => { b.style.background = '#555'; b.style.animation = 'none'; });
-      }
-    });
+      avatars.forEach((av, idx) => {
+        const bars = av.querySelectorAll('span[style*="width:2px"]');
+        const active = indices.includes(idx);
+        bars.forEach((b,i) => { b.style.background = active ? '#3BAD65' : '#555'; b.style.animation = active ? `hamVolume 0.8s ease ${i*0.1}s infinite` : 'none'; });
+      });
+    }
+    // Start: Yoon + Jein talking
+    after(1200, () => setSpeaking([1, 2]));  // Jein + Minh
+    after(2400, () => setSpeaking([0, 3]));  // Yoon + Sara
+    after(3200, () => setSpeaking([0, 1]));  // Yoon + Jein again
 
     // Call ends — transition to inline chat cards (matches real app)
     after(3800, () => {
