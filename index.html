@@ -598,18 +598,18 @@ html.light-mode .hero-pill-arrow { color: #aaa; }
 
 /* ─── SECTION: VS table (below convergence) ─── */
 .vs-cols { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; margin-top: 52px; align-items: stretch; }
-.vs-col { border-radius: 12px; overflow: hidden; border: 1px solid var(--dborder); display: flex; flex-direction: column; }
-.vs-col-h { padding: 15px 18px; display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: none; border-bottom: 1px solid var(--dborder); }
-.vs-col-bad  { border-color: rgba(255,60,60,0.18); }
-.vs-col-good { border-color: rgba(59,173,101,0.18); }
+.vs-col { border-radius: 12px; overflow: hidden; border: none; display: flex; flex-direction: column; }
+.vs-col-h { padding: 15px 18px; display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: none; border-bottom: none; }
+.vs-col-bad  { border: none; }
+.vs-col-good { border: none; }
 .vs-col-bad .vs-col-h  { background: rgba(255,60,60,0.06); color: #FF5F57; }
 .vs-col-good .vs-col-h { background: rgba(59,173,101,0.06); color: #3BAD65; }
 .vs-col-bad  .vs-body  { background: rgba(255,60,60,0.02); }
 .vs-col-good .vs-body  { background: rgba(59,173,101,0.02); }
-.vs-col-bad  .vs-row   { background: rgba(255,60,60,0.03); border-color: rgba(255,60,60,0.1); }
-.vs-col-good .vs-row   { background: rgba(59,173,101,0.03); border-color: rgba(59,173,101,0.1); }
+.vs-col-bad  .vs-row   { background: rgba(255,60,60,0.03); border: none; }
+.vs-col-good .vs-row   { background: rgba(59,173,101,0.03); border: none; }
 .vs-body { padding: 14px; background: var(--dark3); display: flex; flex-direction: column; gap: 7px; flex: 1; }
-.vs-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: var(--dark4); border: 1px solid var(--dborder); border-radius: 7px; flex: 1; }
+.vs-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: var(--dark4); border: none; border-radius: 7px; flex: 1; }
 .vs-ico { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
 .vs-txt { font-size: 14px; font-weight: 500; color: var(--dtxt); }
 .vs-sub { font-size: 12px; color: var(--dtxt2); margin-top: 2px; line-height: 1.4; }
@@ -676,7 +676,7 @@ html.light-mode .hero-pill-arrow { color: #aaa; }
 .fp-tags { display: flex; flex-wrap: wrap; gap: 7px; }
 .fp-tag { font-size: 10px; font-weight: 500; padding: 4px 12px; border-radius: 100px; background: rgba(255,255,255,0.05); border: 1px solid var(--dborder); color: var(--dtxt3); }
 .feat-card-vis {
-  background: var(--dark2); border: 1px solid var(--dborder);
+  background: var(--dark2); border: none;
   border-radius: 14px; padding: 28px; min-height: 240px;
 }
 .fc { background: var(--dark2); padding: 40px; position: relative; transition: background 0.2s; }
@@ -686,7 +686,7 @@ html.light-mode .hero-pill-arrow { color: #aaa; }
   margin-top: 100px;
   padding: 64px 56px;
   background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: none;
   border-radius: 20px;
   position: relative;
   overflow: hidden;
@@ -729,7 +729,7 @@ html.light-mode .hero-pill-arrow { color: #aaa; }
 .maki-action {
   display: flex; align-items: flex-start; gap: 12px;
   padding: 14px 16px;
-  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03); border: none;
   border-radius: 10px;
 }
 .maki-action-icon {
@@ -1790,163 +1790,431 @@ canvas.flow-canvas {
 }
 
 /* ── HERO TRANSFORM ───────────────────────────── */
-.hero-transform {
+/* ── HERO APP MOCK ── */
+.hero-app-mock {
   width: 100%;
-  max-width: 1100px;
+  max-width: 960px;
   margin: 56px auto 0;
-  padding: 0 40px;
+  padding: 0 24px;
+  position: relative;
 }
-.ht-stage {
+.ham-frame {
   display: grid;
-  grid-template-columns: 1fr 180px 1fr;
-  height: 380px;
-  align-items: center;
-}
-.ht-left {
-  position: relative;
-  height: 100%;
+  grid-template-columns: 180px 1fr 260px;
+  height: 520px;
+  background: #2C2C2C;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
   overflow: hidden;
-  mask-image: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.9) 50%, transparent 100%);
-}
-.ht-left canvas.flow-canvas {
-  position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
-}
-.ht-right {
-  position: relative;
-  height: 100%;
-  overflow: visible;
-  padding-left: 24px;
-}
-.ht-center {
-  display: flex; flex-direction: column;
-  align-items: center; gap: 14px;
-  z-index: 10; position: relative;
-}
-.ht-label {
-  position: absolute;
-  bottom: 14px; left: 50%;
-  transform: translateX(-50%);
-  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-  text-transform: uppercase; color: #2E2E2E;
-  white-space: nowrap; display: flex; align-items: center; gap: 5px;
-}
-.ht-dot {
-  width: 4px; height: 4px; border-radius: 50%;
-  background: #333; display: inline-block;
-}
-/* hero bubble (dark on light bg) */
-.ht-bubble {
-  position: absolute;
-  display: flex;
-  align-items: flex-end;
-  gap: 7px;
-  pointer-events: none;
-  opacity: 0;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
   font-family: var(--f);
-  animation: htBubbleFloat linear forwards;
+  font-size: 12px;
+  color: #ccc;
+  text-align: left;
 }
-.ht-bubble-av {
-  width: 22px; height: 22px; border-radius: 50%;
-  flex-shrink: 0;
+/* ── Sidebar ── */
+.ham-sidebar {
+  background: #1D1D1D;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  padding: 16px 0;
+  overflow: hidden;
+}
+.ham-sidebar-header {
+  padding: 0 14px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 12px;
+}
+.ham-ws-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f0f0f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ham-nav-section { margin-bottom: 14px; }
+.ham-nav-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #555;
+  padding: 0 14px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.ham-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: #777;
+  cursor: default;
+  transition: background 0.15s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ham-nav-item.active {
+  background: rgba(191,255,0,0.06);
+  color: #ddd;
+}
+.ham-nav-hash {
+  color: #555;
+  font-weight: 500;
+  font-size: 13px;
+}
+.ham-dm-av {
+  width: 18px; height: 18px;
+  border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 8px; font-weight: 600; color: #fff;
-  margin-bottom: 1px;
-}
-.ht-bubble-content {
-  display: flex; flex-direction: column; gap: 3px;
-  text-align: left;
-}
-.ht-bubble-name {
-  font-size: 8.5px; font-weight: 500; color: #555;
-  letter-spacing: 0.01em;
-  text-align: left;
-}
-.ht-bubble-msg {
-  background: #1e1e1e;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 3px 10px 10px 10px;
-  padding: 6px 11px;
-  font-size: 10px; color: #aaa;
-  white-space: nowrap;
-}
-@keyframes htBubbleFloat {
-  0%   { opacity:0; transform:translateX(0); }
-  6%   { opacity:1; }
-  82%  { opacity:0.7; }
-  100% { opacity:0; transform:translateX(var(--travel)); }
-}
-/* hero task cards, clean stack + shoot */
-.ht-task-card {
-  position: absolute;
-  width: 220px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #181818;
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 11px;
-  padding: 12px 14px;
-  opacity: 0;
-  pointer-events: none;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.50);
-  font-family: var(--f);
-  text-align: left !important;
-  transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.ht-task-card, .ht-task-card * { text-align: left !important; box-sizing: border-box; }
-.ht-task-card.entering {
-  animation: htSlotIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.ht-task-card.holding {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0) scale(1);
-}
-.ht-task-card.shooting {
-  animation: htShoot 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-@keyframes htSlotIn {
-  0%   { opacity:0; transform: translateX(-50%) translateY(18px) scale(0.97); }
-  100% { opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
-}
-@keyframes htShoot {
-  0%   { opacity:1; transform: translateX(-50%) scale(1); }
-  20%  { opacity:1; transform: translateX(-50%) translateX(8px) scale(1.01); }
-  100% { opacity:0; transform: translateX(-50%) translateX(260px) scale(0.95); }
-}
-@media (max-width: 767px) {
-  @keyframes htShoot {
-    0%   { opacity:1; transform: scale(1); }
-    20%  { opacity:1; transform: translateX(6px) scale(1.01); }
-    100% { opacity:0; transform: translateX(120px) scale(0.95); }
-  }
-}
-.ht-tc-top {
-  display: flex; align-items: center;
-  justify-content: space-between; margin-bottom: 8px;
-  text-align: left;
-}
-.ht-tc-badge {
-  font-size: 11px; font-weight: 400;
-  padding: 3px 9px; border-radius: 100px;
-  text-transform: uppercase; letter-spacing: 0.04em;
-}
-.ht-tc-badge.ip { background: rgba(254,188,46,.16); color: #FEBC2E; }
-.ht-tc-badge.ns { background: rgba(255,255,255,.07); color: #666; }
-.ht-tc-badge.dn { background: rgba(59,173,101,.14); color: #3BAD65; }
-.ht-tc-date { font-size: 10px; color: #333; }
-.ht-tc-title {
-  font-size: 12px; font-weight: 400; color: #DEDEDE;
-  line-height: 1.45; margin-bottom: 8px; text-align: left;
-}
-.ht-tc-footer { display: flex; align-items: center; gap: 7px; text-align: left; }
-.ht-tc-av {
-  width: 17px; height: 17px; border-radius: 50%;
-  font-size: 8px; font-weight: 300; color: #000;
-  display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.ht-tc-name { font-size: 11px; color: #3E3E3E; }
-
-
+/* ── Chat panel ── */
+.ham-chat {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+.ham-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f0f0f0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.ham-ch-hash { color: #555; font-size: 15px; }
+.ham-ch-members { font-size: 10px; color: #555; font-weight: 400; margin-left: auto; }
+.ham-chat-body {
+  flex: 1;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+}
+.ham-msg {
+  display: flex;
+  gap: 9px;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: hamMsgIn 0.4s ease forwards;
+}
+.ham-msg-av {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 600; color: #fff;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.ham-msg-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ham-msg-name { font-size: 11px; font-weight: 600; color: #ddd; }
+.ham-msg-text { font-size: 11.5px; color: #999; line-height: 1.5; }
+.ham-msg.maki-msg {
+  background: rgba(191,255,0,0.04);
+  border: 1px solid rgba(191,255,0,0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-top: 4px;
+}
+.ham-msg.maki-msg .ham-msg-name { color: #BFFF00; }
+.ham-msg.maki-msg .ham-msg-text { color: #bbb; }
+@keyframes hamMsgIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+/* ── Data Bucket ── */
+.ham-bucket {
+  display: flex;
+  flex-direction: column;
+  background: #1D1D1D;
+  overflow: hidden;
+}
+.ham-bucket-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.ham-bucket-tabs {
+  display: flex;
+  gap: 2px;
+}
+.ham-bt {
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: #555;
+  cursor: default;
+  white-space: nowrap;
+}
+.ham-bt.active {
+  background: rgba(255,255,255,0.06);
+  color: #ddd;
+}
+.ham-bucket-body {
+  flex: 1;
+  padding: 12px 10px;
+  display: flex;
+  gap: 10px;
+  overflow: hidden;
+}
+.ham-bucket-col {
+  flex: 1;
+  min-width: 0;
+}
+.ham-col-header {
+  font-size: 10px;
+  font-weight: 600;
+  color: #777;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ham-col-count {
+  font-size: 9px;
+  background: rgba(255,255,255,0.06);
+  padding: 1px 6px;
+  border-radius: 8px;
+  color: #666;
+}
+.ham-col-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ham-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 8px 10px;
+  text-align: left;
+}
+.ham-card.new-card {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.97);
+  animation: hamCardIn 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+  border-color: rgba(191,255,0,0.2);
+  box-shadow: 0 0 12px rgba(191,255,0,0.06);
+}
+@keyframes hamCardIn {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.ham-card-title {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #ddd;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.ham-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  color: #666;
+}
+.ham-card-av {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7px; font-weight: 600; color: #fff;
+  flex-shrink: 0;
+}
+.ham-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 8px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(191,255,0,0.08);
+  color: #BFFF00;
+  margin-bottom: 5px;
+}
+/* ── Slogan bar (below app frame) ── */
+.ham-slogan-bar {
+  text-align: center;
+  margin-top: 16px;
+  min-height: 36px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  font-family: var(--f);
+}
+.ham-slogan-bar.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ham-slogan-bar .sl-word {
+  display: inline-block;
+  font-size: 16px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(6px);
+  transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease;
+}
+.ham-slogan-bar .sl-word.visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+.ham-slogan-bar .sl-em {
+  color: #BFFF00;
+  font-weight: 600;
+}
+html.light-mode .ham-slogan-bar .sl-word { color: rgba(0,0,0,0.4); }
+html.light-mode .ham-slogan-bar .sl-em { color: #4A8A00; }
+/* ── MAKi badge ── */
+.ham-maki-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  font-size: 10px;
+  color: #888;
+  font-family: var(--f);
+  white-space: nowrap;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.4s, max-height 0.3s;
+  border-top: 1px solid transparent;
+  flex-shrink: 0;
+}
+.ham-maki-indicator.visible {
+  opacity: 1;
+  max-height: 28px;
+  border-top-color: rgba(255,255,255,0.04);
+}
+.ham-maki-indicator .maki-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #BFFF00;
+  animation: makiPulse 1.5s ease infinite;
+}
+@keyframes makiPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@keyframes hamVolume {
+  0%, 100% { height: 4px; }
+  50% { height: 14px; }
+}
+/* ── Scene slogan ── */
+.ham-slogan {
+  text-align: center;
+  margin-top: 32px;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ham-slogan-text {
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: -0.3px;
+  line-height: 1.5;
+  font-family: var(--f);
+  max-width: 560px;
+}
+.ham-slogan-text .sl-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+  filter: blur(4px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ham-slogan-text .sl-word.visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+.ham-slogan-text .sl-em {
+  color: #BFFF00;
+  font-weight: 400;
+}
+html.light-mode .ham-slogan-text { color: rgba(0,0,0,0.55); }
+html.light-mode .ham-slogan-text .sl-em { color: #4A8A00; }
+/* ── Scene navigation ── */
+.ham-scene-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-family: var(--f);
+}
+.ham-scene-dot {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  background: rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: var(--f);
+}
+.ham-scene-dot:hover {
+  background: rgba(255,255,255,0.08);
+}
+.ham-scene-dot.active {
+  background: rgba(191,255,0,0.1);
+}
+.ham-dot-label {
+  font-size: 10px;
+  color: #555;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.25s;
+}
+.ham-scene-dot.active .ham-dot-label {
+  color: #BFFF00;
+}
+.ham-scene-dot:hover .ham-dot-label {
+  color: #999;
+}
+/* ── Mobile tab bar ── */
+.ham-mobile-tabs {
+  display: none;
+  width: 100%;
+  gap: 0;
+  margin-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 8px;
+}
+.ham-mt {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: #555;
+  padding: 4px 0;
+  cursor: default;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.ham-mt.active {
+  background: rgba(255,255,255,0.06);
+  color: #ddd;
+}
+@media (max-width: 767px) {
+  .ham-mobile-tabs { display: flex; }
+  .ham-chat-header { flex-wrap: wrap; }
+  .ham-chat-header::after { display: none; }
+}
 /* VS tickers */
 .vs-cost-box {
   margin-top: 16px; padding: 14px 16px;
@@ -2632,53 +2900,41 @@ nav .nav-links a.nav-active { color: var(--dtxt) !important; }
   .platform-row { gap: 12px; margin-top: 28px; }
   .plt-badge { font-size: 10px; padding: 4px 10px; }
 
-  /* ── HERO TRANSFORM ── */
-  .hero-transform { margin-top: 40px; }
-  /* hero transform – mobile: keep 3-col layout, just tighter */
-  .hero-transform { padding: 0 0; margin-top: 56px; margin-bottom: 80px; overflow: hidden; width: 100%; }
-  .ht-stage {
-    grid-template-columns: 1fr 100px 1fr;
-    height: 360px;
-  }
-  .ht-center { gap: 8px; }
-  .ht-center .logo-btn { width: 72px; height: 72px; border-radius: 18px; }
-  .ht-center { align-items: center; }
-  .logo-hint {
-    position: absolute;
-    bottom: -28px;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    font-size: 8px;
-  }
-  .logo-hint:hover,
-  .logo-btn:hover + .logo-hint {
-    transform: translateX(-50%);
-    box-shadow: none;
-  }
-  .ht-center { position: relative; padding-bottom: 28px; }
-  .ht-label { font-size: 7px; }
-  /* bubbles: clip more aggressively */
-  .ht-left {
-    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.7) 20%, rgba(0,0,0,0.7) 70%, transparent 100%);
-  }
-  /* right zone: clip overflow on mobile to prevent horizontal bleed */
-  .ht-right {
+  /* ── HERO APP MOCK (mobile) ── */
+  .hero-app-mock { margin-top: 24px; padding: 0 12px; }
+  .ham-frame {
+    grid-template-columns: 1fr;
+    height: 420px;
+    border-radius: 12px;
     overflow: hidden;
-    padding-left: 8px;
-    mask-image: linear-gradient(to left, transparent 0%, black 18%, black 100%);
   }
-  /* task cards on mobile: compact */
-  .ht-task-card { padding: 8px 10px; }
-  .ht-tc-title  { font-size: 10px !important; margin-bottom: 5px !important; line-height: 1.35 !important; }
-  .ht-tc-badge  { font-size: 9px !important; padding: 2px 7px !important; }
-  .ht-tc-date   { font-size: 7px !important; }
-  .ht-tc-name   { font-size: 8px !important; }
-  .ht-tc-av     { width: 14px !important; height: 14px !important; min-width: 14px !important; font-size: 6px !important; flex-shrink: 0 !important; border-radius: 50% !important; }
-  /* left zone: tighter fade */
-  .ht-left {
-    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 80%, transparent 100%);
+  .ham-sidebar { display: none; }
+  .ham-chat { border-right: none; }
+  .ham-chat-header {
+    padding: 10px 14px;
+    font-size: 12px;
   }
+  /* Mobile: show tab row like actual app */
+  .ham-chat-header::after {
+    content: '';
+    display: block;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .ham-chat-body {
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+  }
+  .ham-bucket { display: none; }
+  .ham-slogan { margin-top: 18px; min-height: 40px; }
+  .ham-slogan-text { font-size: 13px; max-width: 320px; }
+  .ham-scene-label { font-size: 9px; padding: 3px 10px; }
+  .ham-maki-indicator { font-size: 9px; }
+  .ham-scene-nav { margin-top: 12px; gap: 3px; flex-wrap: wrap; justify-content: center; }
+  .ham-scene-dot { padding: 8px 16px; }
+  .ham-dot-label { font-size: 11px; }
   /* task cards: narrower + uniform text */
   .task-card {
     width: 148px !important;
@@ -3048,20 +3304,22 @@ html.light-mode .btn-primary { background: #111; color: #fff; }
 html.light-mode .btn-secondary { color: #666; border-color: rgba(0,0,0,0.2); }
 html.light-mode .plt-badge { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); color: #666; }
 
-/* Hero transform */
-html.light-mode .ht-left { background: transparent; }
-html.light-mode .ht-bubble-msg { background: #ececec; border-color: rgba(0,0,0,0.07); color: #333; }
-html.light-mode .ht-bubble-name { color: #999; }
-/* logo-btn keeps default: #EFEFEF bg + #111 icon in all modes */
+/* Hero app mock — force dark in all modes */
+html.light-mode .ham-frame { background: #2C2C2C; color: #ccc; border-color: rgba(0,0,0,0.15); box-shadow: 0 32px 80px rgba(0,0,0,0.15); }
+html.light-mode .ham-sidebar { background: #1D1D1D; }
+html.light-mode .ham-bucket { background: #1D1D1D; }
+html.light-mode .ham-scene-nav { background: transparent; }
+html.light-mode .ham-scene-dot { background: rgba(0,0,0,0.05); }
+html.light-mode .ham-scene-dot:hover { background: rgba(0,0,0,0.08); }
+html.light-mode .ham-scene-dot.active { background: rgba(112,189,0,0.1); }
+html.light-mode .ham-dot-label { color: #888; }
+html.light-mode .ham-scene-dot.active .ham-dot-label { color: #4A8A00; }
+html.light-mode .ham-scene-dot:hover .ham-dot-label { color: #555; }
+html.light-mode .ham-scene-label { color: #999; }
 .vs-tagline-em { color: rgba(255,255,255,0.55); }
 .vs-tagline-main { color: #fff; }
 html.light-mode .vs-tagline-main { color: #111; }
 html.light-mode .vs-tagline-em { color: #444; }
-html.light-mode .logo-hint { background: #81BA00; color: #fff; }
-html.light-mode .hint-dot { background: #fff; }
-html.light-mode .logo-btn .pulse-ring   { border-color: rgba(0,0,0,0.20); border-width: 1px; }
-html.light-mode .logo-btn .pulse-ring-2 { border-color: rgba(0,0,0,0.12); border-width: 0.5px; }
-html.light-mode .logo-btn .pulse-ring-3 { border-color: rgba(0,0,0,0.07); border-width: 0.5px; }
 
 /* Dark sections, flip to light */
 html.light-mode .dark-section { background: #F5F5F3; }
@@ -3069,6 +3327,13 @@ html.light-mode .dark-section .d-h2 { color: #111; }
 html.light-mode .dark-section .d-body { color: #666; }
 html.light-mode .dark-section .d-eyebrow { color: #888; }
 html.light-mode .dark-section .d-eyebrow::before { background: #888; }
+/* Force dark theme text on always-dark sections */
+html.light-mode .dark-forced { background: #0A0A0A !important; color: #ccc !important; }
+html.light-mode .dark-forced .d-h2 { color: #f0f0f0 !important; }
+html.light-mode .dark-forced .d-h2 .dim { color: rgba(255,255,255,0.3) !important; }
+html.light-mode .dark-forced .d-body { color: #888 !important; }
+html.light-mode .dark-forced .d-eyebrow { color: #555 !important; }
+html.light-mode .dark-forced .d-eyebrow::before { background: #555 !important; }
 
 /* Convergence */
 html.light-mode .conv-sticky { background: #F5F5F3; }
@@ -3101,45 +3366,49 @@ html:not(.light-mode) .vs-section {
 }
 html:not(.light-mode) .vs-tagline-main { color: #F0F0F0 !important; }
 html:not(.light-mode) .vs-tagline-em   { color: #555 !important; }
-html:not(.light-mode) .vs-col          { border-color: rgba(255,255,255,0.08) !important; background: rgba(255,255,255,0.03) !important; }
-html:not(.light-mode) .vs-col-bad      { border-color: rgba(255,60,60,0.2) !important; }
-html:not(.light-mode) .vs-col-good     { border-color: rgba(59,173,101,0.2) !important; }
-html:not(.light-mode) .vs-col-h        { border-bottom-color: rgba(255,255,255,0.07) !important; }
+html:not(.light-mode) .vs-col          { border: none !important; background: rgba(255,255,255,0.03) !important; }
+html:not(.light-mode) .vs-col-bad      { border: none !important; }
+html:not(.light-mode) .vs-col-good     { border: none !important; }
+html:not(.light-mode) .vs-col-h        { border-bottom: none !important; }
+html:not(.light-mode) .vs-col-good .vs-col-h { background: rgba(191,255,0,0.06) !important; color: #BFFF00 !important; }
+html:not(.light-mode) .vs-col-good .vs-body  { background: rgba(191,255,0,0.02) !important; }
 html:not(.light-mode) .vs-body         { background: rgba(255,255,255,0.02) !important; }
-html:not(.light-mode) .vs-row          { background: rgba(255,255,255,0.04) !important; border-color: rgba(255,255,255,0.06) !important; }
-html:not(.light-mode) .vs-col-bad  .vs-row { background: rgba(255,60,60,0.04) !important; border-color: rgba(255,60,60,0.12) !important; }
-html:not(.light-mode) .vs-col-good .vs-row { background: rgba(59,173,101,0.04) !important; border-color: rgba(59,173,101,0.12) !important; }
+html:not(.light-mode) .vs-row          { background: rgba(255,255,255,0.04) !important; border: none !important; }
+html:not(.light-mode) .vs-col-bad  .vs-row { background: rgba(255,60,60,0.04) !important; border: none !important; }
+html:not(.light-mode) .vs-col-good .vs-row { background: rgba(191,255,0,0.04) !important; border: none !important; }
 html:not(.light-mode) .vs-txt          { color: #ccc !important; }
 html:not(.light-mode) .vs-sub          { color: #555 !important; }
 html:not(.light-mode) .vs-cost-box     { background: rgba(255,255,255,0.03) !important; border-color: rgba(255,255,255,0.07) !important; }
-html:not(.light-mode) .vs-save-box     { background: rgba(59,173,101,0.05) !important; border-color: rgba(59,173,101,0.15) !important; }
+html:not(.light-mode) .vs-save-box     { background: rgba(191,255,0,0.05) !important; border: none !important; }
 html:not(.light-mode) .vs-cost-label,
 html:not(.light-mode) .vs-save-label   { color: #555 !important; }
+html:not(.light-mode) .vs-save-ticker  { color: #BFFF00 !important; }
+html:not(.light-mode) .vs-save-sub     { color: #BFFF00 !important; }
 html:not(.light-mode) .vs-mid          { color: #444 !important; }
-html.light-mode .vs-col { border-color: rgba(0,0,0,0.07); background: #FAFAFA; }
-html.light-mode .vs-col-h { border-bottom-color: rgba(0,0,0,0.1); }
+html.light-mode .vs-col { border: none; background: #FAFAFA; }
+html.light-mode .vs-col-h { border-bottom: none; }
 
 html.light-mode .vs-mid { color: #bbb; }
 html.light-mode .vs-body { background: #F7F7F5 !important; }
-html.light-mode .vs-row { background: #EFEFEC !important; border-color: rgba(0,0,0,0.05) !important; }
-html.light-mode .vs-cost-box { background: #F7F7F5 !important; border-color: rgba(0,0,0,0.06) !important; }
-html.light-mode .vs-save-box { background: #F7F7F5 !important; border-color: rgba(0,0,0,0.06) !important; }
-html.light-mode .vs-cost-breakdown { border-color: rgba(0,0,0,0.07) !important; }
-html.light-mode .vs-col-bad  { border-color: rgba(255,60,60,0.2) !important; }
-html.light-mode .vs-col-good { border-color: rgba(59,173,101,0.2) !important; }
+html.light-mode .vs-row { background: #EFEFEC !important; border: none !important; }
+html.light-mode .vs-cost-box { background: #F7F7F5 !important; border: none !important; }
+html.light-mode .vs-save-box { background: #F7F7F5 !important; border: none !important; }
+html.light-mode .vs-cost-breakdown { border: none !important; }
+html.light-mode .vs-col-bad  { border: none !important; }
+html.light-mode .vs-col-good { border: none !important; }
 html.light-mode .vs-col-bad .vs-col-h  { background: rgba(255,60,60,0.06) !important; }
 html.light-mode .vs-col-good .vs-col-h { background: rgba(59,173,101,0.06) !important; color: #2a9d57 !important; }
-html.light-mode .vs-col-bad  .vs-row   { background: rgba(255,60,60,0.03) !important; border-color: rgba(255,60,60,0.1) !important; }
-html.light-mode .vs-col-good .vs-row   { background: rgba(59,173,101,0.04) !important; border-color: rgba(59,173,101,0.12) !important; }
+html.light-mode .vs-col-bad  .vs-row   { background: rgba(255,60,60,0.03) !important; border: none !important; }
+html.light-mode .vs-col-good .vs-row   { background: rgba(59,173,101,0.04) !important; border: none !important; }
 
 /* ── VS section light mode specifics ── */
-html.light-mode #vs .vs-col { border-color: rgba(0,0,0,0.07); }
-html.light-mode #vs .vs-col-bad { border-color: rgba(255,60,60,0.18) !important; }
-html.light-mode #vs .vs-col-good { border-color: rgba(59,173,101,0.18) !important; }
+html.light-mode #vs .vs-col { border: none; }
+html.light-mode #vs .vs-col-bad { border: none !important; }
+html.light-mode #vs .vs-col-good { border: none !important; }
 html.light-mode #vs .vs-body { background: #F7F7F5 !important; }
-html.light-mode #vs .vs-row { background: #EFEFEC !important; border-color: rgba(0,0,0,0.05) !important; }
-html.light-mode #vs .vs-col-bad .vs-row { background: rgba(255,60,60,0.03) !important; border-color: rgba(255,60,60,0.1) !important; }
-html.light-mode #vs .vs-col-good .vs-row { background: rgba(59,173,101,0.04) !important; border-color: rgba(59,173,101,0.12) !important; }
+html.light-mode #vs .vs-row { background: #EFEFEC !important; border: none !important; }
+html.light-mode #vs .vs-col-bad .vs-row { background: rgba(255,60,60,0.03) !important; border: none !important; }
+html.light-mode #vs .vs-col-good .vs-row { background: rgba(59,173,101,0.04) !important; border: none !important; }
 html.light-mode #vs .vs-col-bad .vs-col-h { background: rgba(255,60,60,0.06) !important; }
 html.light-mode #vs .vs-col-good .vs-col-h { background: rgba(59,173,101,0.06) !important; color: #2a9d57 !important; }
 html.light-mode #vs .vs-cost-box { background: #F0F0EC !important; border-color: rgba(0,0,0,0.06) !important; }
@@ -3160,18 +3429,18 @@ html.light-mode .fp-title { color: #111; }
 html.light-mode .fp-desc { color: #666; }
 html.light-mode .fp-tag { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.07); color: #888; }
 html.light-mode .fpc-right { background: #EBEBEA; border-color: rgba(0,0,0,0.07); }
-html.light-mode .feat-card-vis { background: #EBEBEA; border-color: rgba(0,0,0,0.07); }
+html.light-mode .feat-card-vis { background: #EBEBEA; border: none; }
 html.light-mode .fc { background: #EBEBEA; }
 html.light-mode .feat-dot { background: rgba(0,0,0,0.15); }
 html.light-mode .feat-dot.active { background: #111; }
 
 /* MAKi */
-html.light-mode .maki-section { background: #EEEEEB; border-color: rgba(0,0,0,0.08); }
+html.light-mode .maki-section { background: #EEEEEB; border: none; }
 html.light-mode .maki-title { color: #111; }
 html.light-mode .maki-title em { color: #81BA00; }
 html.light-mode .maki-sub { color: #666; }
 html.light-mode .maki-desc { color: #555; }
-html.light-mode .maki-action { background: #E5E5E2; border-color: rgba(0,0,0,0.08); }
+html.light-mode .maki-action { background: #E5E5E2; border: none; }
 html.light-mode .maki-action-label { color: #111; }
 html.light-mode .maki-action-sub { color: #777; }
 html.light-mode .maki-action-desc { color: #666; }
@@ -3194,23 +3463,16 @@ html.light-mode .faq-ic { color: #888; }
 /* Task cards */
 
 /* Task cards, light mode */
-html.light-mode .task-card,
-html.light-mode .ht-task-card {
+html.light-mode .task-card {
   background: #FFFFFF;
   border-color: rgba(0,0,0,0.09);
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
-html.light-mode .tc-title,
-html.light-mode .ht-tc-title { color: #111; }
-html.light-mode .tc-date,
-html.light-mode .ht-tc-date { color: #999; }
-html.light-mode .ht-tc-name { color: #555; }
-html.light-mode .tc-badge.ns,
-html.light-mode .ht-tc-badge.ns { background: rgba(0,0,0,0.06); color: #888; }
-html.light-mode .tc-badge.ip,
-html.light-mode .ht-tc-badge.ip { background: rgba(254,188,46,.14); color: #C98A00; }
-html.light-mode .tc-badge.dn,
-html.light-mode .ht-tc-badge.dn { background: rgba(59,173,101,.12); color: #2A8A50; }
+html.light-mode .tc-title { color: #111; }
+html.light-mode .tc-date { color: #999; }
+html.light-mode .tc-badge.ns { background: rgba(0,0,0,0.06); color: #888; }
+html.light-mode .tc-badge.ip { background: rgba(254,188,46,.14); color: #C98A00; }
+html.light-mode .tc-badge.dn { background: rgba(59,173,101,.12); color: #2A8A50; }
 
 
 /* Footer */
@@ -4082,14 +4344,14 @@ html.light-mode .testi-role { color: #666; }
   <div style="display:flex;justify-content:center;align-items:center;margin-bottom:32px;animation:fadeUp 0.5s ease both">
     <div class="hero-eyebrow">
       <span class="ey-dot"></span>
-      AI-native workspace · Chat → Tasks → Done
+      AI workspace for teams that ship
     </div>
   </div>
 
-  <h1 class="hero-h1">Just talk.<br><em>AI handles the rest.</em></h1>
+  <h1 class="hero-h1"><span style="color:#70BD00">Talk.</span> And it's done.</h1>
 
   <p class="hero-sub">
-    Tasks, notes, summaries, follow-ups. All from what you say, type, or call. No extra tools. No manual input.
+    MARKHUB turns chat, calls, and meetings into tasks,<br>notes, and follow-ups. Automatically.
   </p>
 
   <div class="hero-btns">
@@ -4097,39 +4359,163 @@ html.light-mode .testi-role { color: #666; }
       Get Started Free
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7h9M7.5 3.5l3.5 3.5-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
-    <a href="https://app.markhub.ai/invite/b8c80c7a4223bbd5bb5381f46dca9fb96d218505554337fed7aada68bb4a7cde" target="_blank" class="btn-secondary">Join Community</a>
+    <a href="#features" class="btn-secondary">See it in action</a>
   </div>
 
-  <!-- product screenshot -->
-  <!-- transform animation (hero) -->
-  <div class="hero-transform reveal" id="heroTransform">
-    <div class="ht-stage">
-      <div class="ht-left" id="leftZone">
-        <div class="ht-label">
-          <span class="ht-dot"></span>Chat · Voice · Call
+  <!-- hero app mock animation -->
+  <div class="hero-app-mock reveal" id="heroAppMock">
+    <!-- scene label -->
+    <div class="ham-scene-label" id="hamSceneLabel" style="display:none;"></div>
+    <div class="ham-frame">
+      <!-- Sidebar -->
+      <div class="ham-sidebar">
+        <div class="ham-sidebar-header">
+          <div class="ham-ws-name">MARKHUB Inc.</div>
+        </div>
+        <div class="ham-nav-section">
+          <div class="ham-nav-label">HUBS</div>
+          <div class="ham-nav-item active" id="hamNavActive">
+            <span class="ham-nav-hash">#</span> product-launch
+          </div>
+          <div class="ham-nav-item">
+            <span class="ham-nav-hash">#</span> design-review
+          </div>
+          <div class="ham-nav-item">
+            <span class="ham-nav-hash">#</span> eng-standup
+          </div>
+          <div class="ham-nav-item">
+            <span class="ham-nav-hash">#</span> monthly-sprint
+          </div>
+        </div>
+        <div class="ham-nav-section">
+          <div class="ham-nav-label">DIRECT</div>
+          <div class="ham-nav-item">
+            <div class="ham-dm-av" style="background:#C8A97A">Y</div> Yoon Shin
+          </div>
+          <div class="ham-nav-item">
+            <div class="ham-dm-av" style="background:#8FA8C8">J</div> Jein Song
+          </div>
+          <div class="ham-nav-item">
+            <div class="ham-dm-av" style="background:#8FC89A">R</div> Robert Lee
+          </div>
+        </div>
+        <div class="ham-nav-section">
+          <div class="ham-nav-label">CONNECTED</div>
+          <div class="ham-nav-item" style="color:#555;font-size:10px;">
+            <span style="font-size:12px;">🔗</span> Slack · GitHub
+          </div>
         </div>
       </div>
-      <div class="ht-center">
-        <button class="logo-btn" id="logoBtn">
-          <div class="pulse-ring"></div>
-          <div class="pulse-ring-2"></div>
-          <div class="pulse-ring-3"></div>
-          <svg width="116" height="101" viewBox="0 0 137 119" fill="none">
-            <path d="M123.134 96.2744C118.885 94.1533 114.075 91.7549 104.869 91.7549C95.6639 91.7549 90.8533 94.1533 86.6042 96.2744C82.9304 98.1043 79.7626 99.6847 73.0527 99.6847C66.3428 99.6847 63.182 98.1043 59.5082 96.2744C55.2591 94.1533 50.4485 91.7549 41.2432 91.7549V110.581C47.9461 110.581 51.1139 112.162 54.7877 113.992C59.0368 116.113 63.8474 118.511 73.0527 118.511C82.258 118.511 87.0686 116.113 91.3178 113.992C94.9916 112.162 98.1593 110.581 104.862 110.581C111.565 110.581 114.74 112.162 118.414 113.992C122.663 116.113 127.474 118.511 136.679 118.511V99.6847C129.976 99.6847 126.801 98.1043 123.127 96.2744H123.134Z" fill="#111"/>
-            <path d="M108.692 12.0939L98.6044 2.00673C95.9245 -0.673192 91.5794 -0.673193 88.8995 2.00673L27.7294 63.1768C25.0495 65.8568 25.0495 70.2018 27.7294 72.8817L37.8166 82.9689C40.4965 85.6488 44.8415 85.6488 47.5215 82.9689L108.692 21.7988C111.372 19.1189 111.372 14.7738 108.692 12.0939Z" fill="#111"/>
-            <path d="M24.4204 81.6553H6.86238C3.07239 81.6553 0 84.7277 0 88.5177V106.076C0 109.866 3.07239 112.938 6.86238 112.938H24.4204C28.2104 112.938 31.2828 109.866 31.2828 106.076V88.5177C31.2828 84.7277 28.2104 81.6553 24.4204 81.6553Z" fill="#111"/>
-          </svg>
-        </button>
-        <div class="logo-hint">
-          <div class="hint-dot"></div>
-          Click for Live Demo
+
+      <!-- Chat panel -->
+      <div class="ham-chat">
+        <div class="ham-chat-header">
+          <span class="ham-ch-hash">#</span> product-launch
+          <div class="ham-ch-members">
+            <span id="hamHeaderExtra" style="margin-right:6px;"></span>6 members
+          </div>
+          <!-- Mobile-only tab bar (mimics actual app) -->
+          <div class="ham-mobile-tabs" id="hamMobileTabs">
+            <span class="ham-mt active">Chat</span>
+            <span class="ham-mt">To-Do</span>
+            <span class="ham-mt">Note</span>
+            <span class="ham-mt">File</span>
+          </div>
+        </div>
+        <div class="ham-chat-body" id="hamChatBody"></div>
+        <!-- MAKi indicator (inside chat) -->
+        <div class="ham-maki-indicator" id="hamMakiIndicator">
+          <div class="maki-dot"></div>
+          <span id="hamMakiText">MAKi is listening...</span>
+        </div>
+        <!-- Composer bar (matches real app) -->
+        <div id="hamComposer" style="border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0;padding:6px 12px 8px;">
+          <!-- Toggle: Chat / MAKi-bot -->
+          <div style="display:flex;justify-content:center;margin-bottom:6px;">
+            <div id="hamComposerToggle" style="display:inline-flex;align-items:center;background:rgba(255,255,255,0.04);border-radius:20px;padding:2px;gap:0;transition:all 0.3s;">
+              <span id="hamTogChat" class="ham-tog-btn" style="font-size:9px;padding:3px 12px;border-radius:18px;color:#666;cursor:default;transition:all 0.3s;font-family:var(--f);font-weight:500;">Chat</span>
+              <span id="hamTogBot" class="ham-tog-btn ham-tog-active" style="font-size:9px;padding:3px 12px;border-radius:18px;background:rgba(255,255,255,0.95);color:#1D1D1D;cursor:default;transition:all 0.3s;font-family:var(--f);font-weight:600;">MAKi-bot</span>
+            </div>
+          </div>
+          <!-- Placeholder text -->
+          <div style="margin-bottom:6px;">
+            <span id="hamComposerText" style="font-size:10px;color:#555;font-family:var(--f);">Ask MAKi-bot — <span style="color:#9B8FFF;font-style:italic;">Summarize the meeting notes</span></span>
+          </div>
+          <!-- Toolbar + Send -->
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;gap:10px;align-items:center;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 006 0v-1a10 10 0 10-3.92 7.94"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+            </div>
+            <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#555"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="ht-right" id="rightZone">
-        <div class="ht-label" style="right:0;left:auto">
-          <span class="ht-dot" style="background:#1E6B3A"></span>Tasks · Emails · Notices · More
+
+      <!-- Data Bucket -->
+      <div class="ham-bucket">
+        <div class="ham-bucket-header">
+          <div class="ham-bucket-tabs" id="hamBucketTabs">
+            <span class="ham-bt active" data-tab="todo">To-Do Board</span>
+            <span class="ham-bt" data-tab="notes">Notes</span>
+            <span class="ham-bt" data-tab="calendar">Calendar</span>
+            <span class="ham-bt" data-tab="files">Files</span>
+          </div>
+        </div>
+        <!-- To-Do Board view -->
+        <div class="ham-bucket-body" id="hamBucketTodo">
+          <div class="ham-bucket-col">
+            <div class="ham-col-header">To Do <span class="ham-col-count" id="hamTodoCount">0</span></div>
+            <div class="ham-col-cards" id="hamTodoCards"></div>
+          </div>
+          <div class="ham-bucket-col">
+            <div class="ham-col-header">In Progress <span class="ham-col-count">1</span></div>
+            <div class="ham-col-cards">
+              <div class="ham-card static">
+                <div class="ham-card-title">Design landing page v2</div>
+                <div class="ham-card-meta">
+                  <div class="ham-card-av" style="background:#8FA8C8">J</div>
+                  <span>Jein Song</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Notes view (hidden initially) -->
+        <div class="ham-bucket-body" id="hamBucketNotes" style="display:none;">
+          <div style="width:100%;">
+            <div class="ham-col-header">Meeting Notes <span class="ham-col-count" id="hamNotesCount">0</span></div>
+            <div class="ham-col-cards" id="hamNoteCards"></div>
+          </div>
         </div>
       </div>
+    </div>
+    <!-- Scene navigation -->
+    <!-- Scene slogan (below app frame) -->
+    <div class="ham-slogan-bar" id="hamSloganBar">
+      <span id="hamSloganText"></span>
+    </div>
+    <div class="ham-scene-nav" id="hamSceneNav">
+      <button class="ham-scene-dot active" data-scene="0">
+        <span class="ham-dot-label">Team Chat</span>
+      </button>
+      <button class="ham-scene-dot" data-scene="1">
+        <span class="ham-dot-label">Meeting</span>
+      </button>
+      <button class="ham-scene-dot" data-scene="2">
+        <span class="ham-dot-label">AI Insights</span>
+      </button>
+      <button class="ham-scene-dot" data-scene="3">
+        <span class="ham-dot-label">Progress</span>
+      </button>
+      <button class="ham-scene-dot" data-scene="4">
+        <span class="ham-dot-label">Integrations</span>
+      </button>
     </div>
   </div>
 
@@ -4200,41 +4586,55 @@ html.light-mode .testi-role { color: #666; }
 </section>
 </div><!-- /hero-pin -->
 
+<!-- SOCIAL PROOF BAR -->
+<div style="background:var(--dark2);border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:20px 56px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;">
+    <span style="font-size:12px;color:#555;letter-spacing:0.03em;">Trusted by early-stage teams worldwide</span>
+    <div style="width:1px;height:20px;background:rgba(255,255,255,0.08);"></div>
+    <span style="font-size:12px;color:#666;display:flex;align-items:center;gap:6px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#C8E600"/></svg>
+      Web &middot; Mac &middot; Windows &middot; iOS &amp; Android coming soon
+    </span>
+    <div style="width:1px;height:20px;background:rgba(255,255,255,0.08);"></div>
+    <span style="font-size:12px;color:#666;">Free plan available &middot; No credit card required</span>
+  </div>
+</div>
+
 <!-- PROBLEM SECTION -->
 <section id="problem" class="dark-section" style="border-top:1px solid rgba(255,255,255,0.08);padding:100px 56px;">
   <div style="max-width:1100px;margin:0 auto;">
     <div class="reveal" style="text-align:center;margin-bottom:64px;">
       <div class="d-eyebrow">The problem</div>
-      <h2 class="d-h2">You have AI tools.<br><span class="dim">They just don't know your work.</span></h2>
-      <p class="d-body" style="max-width:560px;margin:20px auto 0;">AI is everywhere. But your AI assistant doesn't know your team. Your note-taking app hasn't read yesterday's meeting. Your messenger's AI doesn't know who's blocked. The tools are smart, they just live outside your work.</p>
+      <h2 class="d-h2">Your tools are smart.<br><span class="dim">They just don't talk to each other.</span></h2>
+      <p class="d-body" style="max-width:560px;margin:20px auto 0;">Your team uses Slack to chat, Notion to document, Asana to track tasks, and Otter to record calls. But none of them share context. Decisions made in chat never become tasks. Meeting action items vanish. You spend more time organizing work than doing it.</p>
     </div>
 
-    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;">
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
 
-      <div style="background:#F7F7F5;border:1px solid rgba(0,0,0,0.06);border-radius:16px;padding:32px 26px;">
-        <div style="font-size:26px;margin-bottom:18px;">🤖</div>
-        <div style="font-size:17px;font-weight:700;color:#111;margin-bottom:6px;">AI Assistants</div>
-        <div style="font-size:13px;color:#888;margin-bottom:18px;">ChatGPT, Claude, Gemini</div>
+      <div style="background:var(--dark2);border-radius:16px;padding:32px 26px;">
+        <div style="font-size:26px;margin-bottom:18px;">💬</div>
+        <div style="font-size:17px;font-weight:600;color:var(--dtxt);margin-bottom:6px;">Messengers</div>
+        <div style="font-size:13px;color:#666;margin-bottom:18px;">Slack, Teams, Discord</div>
         <div style="display:flex;flex-direction:column;gap:9px;">
           <div style="display:flex;align-items:flex-start;gap:8px;">
             <span style="color:#FF5F57;font-size:10px;flex-shrink:0;margin-top:3px;">✕</span>
-            <span style="font-size:12px;color:#888;line-height:1.5;">Doesn't know your team or projects</span>
+            <span style="font-size:12px;color:#888;line-height:1.5;">AI summarizes threads but can't act on them</span>
           </div>
           <div style="display:flex;align-items:flex-start;gap:8px;">
             <span style="color:#FF5F57;font-size:10px;flex-shrink:0;margin-top:3px;">✕</span>
-            <span style="font-size:12px;color:#888;line-height:1.5;">You explain context from scratch every time</span>
+            <span style="font-size:12px;color:#888;line-height:1.5;">Decisions get buried in endless threads</span>
           </div>
           <div style="display:flex;align-items:flex-start;gap:8px;">
             <span style="color:#FF5F57;font-size:10px;flex-shrink:0;margin-top:3px;">✕</span>
-            <span style="font-size:12px;color:#888;line-height:1.5;">Can't take action inside your workspace</span>
+            <span style="font-size:12px;color:#888;line-height:1.5;">No one owns the follow-up after the call</span>
           </div>
         </div>
       </div>
 
-      <div style="background:#F7F7F5;border:1px solid rgba(0,0,0,0.06);border-radius:16px;padding:32px 26px;">
+      <div style="background:var(--dark2);border-radius:16px;padding:32px 26px;">
         <div style="font-size:26px;margin-bottom:18px;">📝</div>
-        <div style="font-size:17px;font-weight:700;color:#111;margin-bottom:6px;">Note-taking Apps</div>
-        <div style="font-size:13px;color:#888;margin-bottom:18px;">Notion, Confluence, Obsidian</div>
+        <div style="font-size:17px;font-weight:600;color:var(--dtxt);margin-bottom:6px;">Documentation</div>
+        <div style="font-size:13px;color:#666;margin-bottom:18px;">Notion, Confluence, Google Docs</div>
         <div style="display:flex;flex-direction:column;gap:9px;">
           <div style="display:flex;align-items:flex-start;gap:8px;">
             <span style="color:#FF5F57;font-size:10px;flex-shrink:0;margin-top:3px;">✕</span>
@@ -4251,42 +4651,22 @@ html.light-mode .testi-role { color: #666; }
         </div>
       </div>
 
-      <div style="background:#F7F7F5;border:1px solid rgba(0,0,0,0.06);border-radius:16px;padding:32px 26px;">
-        <div style="font-size:26px;margin-bottom:18px;">💬</div>
-        <div style="font-size:17px;font-weight:700;color:#111;margin-bottom:6px;">Messengers with AI</div>
-        <div style="font-size:13px;color:#888;margin-bottom:18px;">Slack, Teams, Discord</div>
+      <div style="background:var(--dark2);border-radius:16px;padding:32px 26px;">
+        <div style="font-size:26px;margin-bottom:18px;">📋</div>
+        <div style="font-size:17px;font-weight:600;color:var(--dtxt);margin-bottom:6px;">Project Management</div>
+        <div style="font-size:13px;color:#666;margin-bottom:18px;">Asana, Jira, Monday</div>
         <div style="display:flex;flex-direction:column;gap:9px;">
-          <div style="display:flex;align-items:flex-start;gap:8px;">
-            <span style="color:#FF5F57;font-size:10px;flex-shrink:0;margin-top:3px;">✕</span>
-            <span style="font-size:12px;color:#888;line-height:1.5;">AI summarizes threads but can't act on them</span>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:8px;">
-            <span style="color:#FF5F57;font-size:10px;flex-shrink:0;margin-top:3px;">✕</span>
-            <span style="font-size:12px;color:#888;line-height:1.5;">No one knows who owns what after the call</span>
-          </div>
           <div style="display:flex;align-items:flex-start;gap:8px;">
             <span style="color:#FF5F57;font-size:10px;flex-shrink:0;margin-top:3px;">✕</span>
             <span style="font-size:12px;color:#888;line-height:1.5;">Tasks only exist if someone manually creates them</span>
           </div>
-        </div>
-      </div>
-
-      <div style="background:#F7F7F5;border:1px solid rgba(0,0,0,0.06);border-radius:16px;padding:32px 26px;">
-        <div style="font-size:26px;margin-bottom:18px;">🔧</div>
-        <div style="font-size:17px;font-weight:700;color:#111;margin-bottom:6px;">Local AI Agents</div>
-        <div style="font-size:13px;color:#888;margin-bottom:18px;">OpenClaw, Local setups</div>
-        <div style="display:flex;flex-direction:column;gap:9px;">
           <div style="display:flex;align-items:flex-start;gap:8px;">
             <span style="color:#FF5F57;font-size:10px;flex-shrink:0;margin-top:3px;">✕</span>
-            <span style="font-size:12px;color:#888;line-height:1.5;">Requires installation, terminal, and config</span>
+            <span style="font-size:12px;color:#888;line-height:1.5;">No connection to the conversation that created them</span>
           </div>
           <div style="display:flex;align-items:flex-start;gap:8px;">
             <span style="color:#FF5F57;font-size:10px;flex-shrink:0;margin-top:3px;">✕</span>
-            <span style="font-size:12px;color:#888;line-height:1.5;">Only works for technical users who can set it up</span>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:8px;">
-            <span style="color:#FF5F57;font-size:10px;flex-shrink:0;margin-top:3px;">✕</span>
-            <span style="font-size:12px;color:#888;line-height:1.5;">No team context, still just one person's AI</span>
+            <span style="font-size:12px;color:#888;line-height:1.5;">Status updates are manual guesswork</span>
           </div>
         </div>
       </div>
@@ -4296,7 +4676,7 @@ html.light-mode .testi-role { color: #666; }
     <div class="reveal" style="text-align:center;margin-top:56px;">
       <div style="display:inline-flex;align-items:center;gap:12px;background:rgba(150,204,0,0.08);border:1px solid rgba(150,204,0,0.3);border-radius:100px;padding:13px 28px;">
         <div style="width:6px;height:6px;border-radius:50%;background:#96CC00;flex-shrink:0;"></div>
-        <span style="font-size:13px;color:#96CC00;font-weight:400;">MARKHUB works instantly, no install, no code, no setup. Just sign up and start.</span>
+        <span style="font-size:13px;color:#96CC00;font-weight:400;">MARKHUB replaces all three. One workspace. Zero context-switching.</span>
       </div>
     </div>
 
@@ -4320,9 +4700,9 @@ html.light-mode .testi-role { color: #666; }
 
     <!-- copy block (left-aligned) -->
     <div class="conv-copy" id="convCopy">
-      <div class="conv-copy-eyebrow">Why MARKHUB</div>
-      <h2>Not another Slack.<br><em>The layer above it.</em></h2>
-      <p>MARKHUB isn't a messaging app. It's the execution layer that sits on top of every conversation, automatically turning what gets said into what gets done.</p>
+      <div class="conv-copy-eyebrow">How MARKHUB works</div>
+      <h2>Conversations in.<br><em>Organized work out.</em></h2>
+      <p>Every hub in MARKHUB is a complete workspace: chat, tasks, calendar, notes, and files. MAKi, your AI agent, lives inside every hub &mdash; reading conversations and turning them into structured work, without anyone asking.</p>
     </div>
 
     <!-- center MARKHUB icon -->
@@ -4451,10 +4831,10 @@ html.light-mode .testi-role { color: #666; }
   <div class="dark-inner" style="position:relative;z-index:1;">
 
     <div class="reveal" style="text-align:center; margin-bottom: 40px;">
-      <p style="font-size: clamp(13px, 1.5vw, 15px); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #444; margin-bottom: 16px;">The problem with your current stack</p>
+      <p style="font-size: clamp(13px, 1.5vw, 15px); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #444; margin-bottom: 16px;">Why switch</p>
       <p style="font-size: clamp(22px, 3.5vw, 36px); font-weight: 300; line-height: 1.35; letter-spacing: -0.03em;" class="vs-tagline-main">
-        Slack locks your tribal knowledge.<br>
-        <em style="font-style:italic; font-weight:300;" class="vs-tagline-em">MARKHUB sets it free, and puts it to work.</em>
+        One tool. Not four.<br>
+        <em style="font-style:italic; font-weight:300;" class="vs-tagline-em">Less cost. More context. Zero switching.</em>
       </p>
     </div>
 
@@ -4537,7 +4917,7 @@ html.light-mode .testi-role { color: #666; }
   <div class="dark-inner">
     <div class="reveal">
       <div class="d-eyebrow">Features</div>
-      <h2 class="d-h2">Everything in one hub. <span class="dim">Powered by MAKi.</span></h2>
+      <h2 class="d-h2">Everything in one hub.<br><span class="dim">Powered by MAKi.</span></h2>
       <p class="d-body" style="max-width:520px;margin:16px 0 0;text-align:left;">MAKi is MARKHUB's built-in AI agent, not a chatbot you visit, but an AI that lives inside every hub and works alongside your team.</p>
     </div>
 
@@ -4557,11 +4937,11 @@ html.light-mode .testi-role { color: #666; }
         <div class="fpcards" id="fpCards">
           <div class="fpcard" data-card="0">
             <div class="fpc-left">
-              <div class="fp-num">01 · Conversation Capture</div>
-              <h3 class="fp-title">Any conversation.<br>Auto-captured.</h3>
-              <p class="fp-desc">Chat thread, voice note, or live call. MARKHUB listens, transcribes, and extracts tasks in real time. No bots. No manual recap.</p>
+              <div class="fp-num">01 · Voice &amp; Call Intelligence</div>
+              <h3 class="fp-title">Calls that capture<br>themselves.</h3>
+              <p class="fp-desc">Built-in voice and video calls with automatic recording, transcription, and task extraction. No external bot joins your call. When the conversation ends, tasks appear in your Data Bucket.</p>
               <div class="fp-tags">
-                <span class="fp-tag">Chat threads</span><span class="fp-tag">Voice &amp; call</span><span class="fp-tag">AI summary</span><span class="fp-tag">Task extraction</span>
+                <span class="fp-tag">Voice calls</span><span class="fp-tag">Video calls</span><span class="fp-tag">Auto-transcription</span><span class="fp-tag">Meeting summary</span><span class="fp-tag">Task extraction</span>
               </div>
             </div>
             <div class="fpc-right" id="card0Right" style="position:relative;overflow:hidden;">
@@ -4597,9 +4977,9 @@ html.light-mode .testi-role { color: #666; }
 
           <div class="fpcard" data-card="1">
             <div class="fpc-left">
-              <div class="fp-num">02 · AI Native</div>
-              <h3 class="fp-title">Tasks that<br>execute themselves.</h3>
-              <p class="fp-desc">A task isn't just a note. MAKi reads it and acts: sends the email, wires the payment, generates the image, books the meeting, drafts the doc. The conversation ends. The work is already done.</p>
+              <div class="fp-num">02 · Data Bucket</div>
+              <h3 class="fp-title">Six views.<br>One workspace.</h3>
+              <p class="fp-desc">Every hub has a built-in Data Bucket with six switchable views. Tasks auto-populate from conversations. Everything stays next to the chat that created it.</p>
               <div class="maki-inline-badge">
                 <span style="color:#C8E600">✦</span> MAKi, Mark Intelligence &nbsp;·&nbsp; MARKHUB's native AI agent
               </div>
@@ -4664,9 +5044,9 @@ html.light-mode .testi-role { color: #666; }
 
           <div class="fpcard" data-card="2">
             <div class="fpc-left">
-              <div class="fp-num">03 · Data Bucket</div>
-              <h3 class="fp-title">Context lives<br>next to the chat.</h3>
-              <p class="fp-desc">Every hub has a built-in workspace, tasks, calendar, notes, and files organized by project. No more context-switching.</p>
+              <div class="fp-num">03 · MAKi AI Agent</div>
+              <h3 class="fp-title">The AI that works<br>before you ask.</h3>
+              <p class="fp-desc">MAKi reads every conversation in your hub. It creates tasks automatically, sends follow-up emails, posts team notices, bulk-updates ticket statuses, and gives honest project status reports.</p>
               <div class="fp-tags">
                 <span class="fp-tag">To-Do board</span><span class="fp-tag">Calendar</span><span class="fp-tag">Shared notes</span><span class="fp-tag">File storage</span>
               </div>
@@ -4683,9 +5063,9 @@ html.light-mode .testi-role { color: #666; }
 
           <div class="fpcard" data-card="3">
             <div class="fpc-left">
-              <div class="fp-num">04 · Hub Channels</div>
-              <h3 class="fp-title">Organized by<br>project, not tool.</h3>
-              <p class="fp-desc">Each hub is a self-contained workspace, chat, tasks, calendar, and files in one view. Context stays whole.</p>
+              <div class="fp-num">04 · ForYou Dashboard</div>
+              <h3 class="fp-title">Your personal<br>command center.</h3>
+              <p class="fp-desc">ForYou is your daily dashboard: Inbox for mentions and assignments, My Tasks filtered by status, and Activity feed across all hubs. Start your day knowing exactly what needs attention.</p>
               <div class="fp-tags">
                 <span class="fp-tag">Starred hubs</span><span class="fp-tag">Direct messages</span><span class="fp-tag">9+ members</span>
               </div>
@@ -4713,8 +5093,8 @@ html.light-mode .testi-role { color: #666; }
 
         <!-- LEFT: copy + actions -->
         <div>
-          <h3 class="maki-title">The AI that understood<br><em>before you asked.</em></h3>
-          <p class="maki-desc">MAKi isn't a chatbot you visit in a separate tab. It lives inside every hub, reading your team's conversations, understanding who's blocked, and taking action on your behalf. All without being asked.</p>
+          <h3 class="maki-title">Meet MAKi.<br><em>Your AI teammate.</em></h3>
+          <p class="maki-desc">MAKi isn't a chatbot in a separate tab. It lives inside every hub &mdash; reading conversations, understanding who's blocked, and taking action on your behalf. Auto-create tasks, send emails, post notices, analyze projects. All without being asked.</p>
           <div class="maki-actions">
             <div class="maki-action">
               <div class="maki-action-icon">🧠</div>
@@ -4783,6 +5163,85 @@ html.light-mode .testi-role { color: #666; }
   </div>
 </section>
 
+<!-- INTEGRATIONS -->
+<section id="integrations" class="dark-section dark-forced" style="border-top:1px solid rgba(255,255,255,0.08);padding:100px 56px;background:#0A0A0A !important;color:#ccc !important;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:56px;">
+      <div class="d-eyebrow">Integrations</div>
+      <h2 class="d-h2">Connect what you<br><span class="dim">already use.</span></h2>
+      <p class="d-body" style="max-width:520px;margin:18px auto 0;">MARKHUB syncs bi-directionally with your existing tools. Keep using Slack, Notion, or GitHub &mdash; MARKHUB pulls context from all of them into one workspace.</p>
+    </div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+
+      <!-- Slack -->
+      <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="20" height="20" viewBox="-2.45 0 2452.5 2452.5"><g clip-rule="evenodd" fill-rule="evenodd"><path d="m897.4 0c-135.3.1-244.8 109.9-244.7 245.2-.1 135.3 109.5 245.1 244.8 245.2h244.8v-245.1c.1-135.3-109.5-245.1-244.9-245.3.1 0 .1 0 0 0m0 654h-652.6c-135.3.1-244.9 109.9-244.8 245.2-.2 135.3 109.4 245.1 244.7 245.3h652.7c135.3-.1 244.9-109.9 244.8-245.2.1-135.4-109.5-245.2-244.8-245.3z" fill="#36c5f0"/><path d="m2447.6 899.2c.1-135.3-109.5-245.1-244.8-245.2-135.3.1-244.9 109.9-244.8 245.2v245.3h244.8c135.3-.1 244.9-109.9 244.8-245.3zm-652.7 0v-654c.1-135.2-109.4-245-244.7-245.2-135.3.1-244.9 109.9-244.8 245.2v654c-.2 135.3 109.4 245.1 244.7 245.3 135.3-.1 244.9-109.9 244.8-245.3z" fill="#2eb67d"/><path d="m1550.1 2452.5c135.3-.1 244.9-109.9 244.8-245.2.1-135.3-109.5-245.1-244.8-245.2h-244.8v245.2c-.1 135.2 109.5 245 244.8 245.2zm0-654.1h652.7c135.3-.1 244.9-109.9 244.8-245.2.2-135.3-109.4-245.1-244.7-245.3h-652.7c-135.3.1-244.9 109.9-244.8 245.2-.1 135.4 109.4 245.2 244.7 245.3z" fill="#ecb22e"/><path d="m0 1553.2c-.1 135.3 109.5 245.1 244.8 245.2 135.3-.1 244.9-109.9 244.8-245.2v-245.2h-244.8c-135.3.1-244.9 109.9-244.8 245.2zm652.7 0v654c-.2 135.3 109.4 245.1 244.7 245.3 135.3-.1 244.9-109.9 244.8-245.2v-653.9c.2-135.3-109.4-245.1-244.7-245.3-135.4 0-244.9 109.8-244.8 245.1 0 0 0 .1 0 0" fill="#e01e5a"/></g></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:500;color:#f0f0f0;margin-bottom:4px;">Slack</div>
+          <div style="font-size:12px;color:#666;line-height:1.5;">Bi-directional channel sync. Messages flow between Slack and MARKHUB hubs in real time.</div>
+        </div>
+      </div>
+
+      <!-- Discord -->
+      <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="20" height="20" viewBox="0 -28.5 256 256"><path d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z" fill="#5865F2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:500;color:#f0f0f0;margin-bottom:4px;">Discord</div>
+          <div style="font-size:12px;color:#666;line-height:1.5;">Guild and channel sync. Bring your Discord community conversations into MARKHUB hubs.</div>
+        </div>
+      </div>
+
+      <!-- Google Calendar -->
+      <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="20" height="20" viewBox="0 0 256 256"><g><polygon fill="#FFFFFF" points="195.368421 60.6315789 60.6315789 60.6315789 60.6315789 195.368421 195.368421 195.368421"/><polygon fill="#EA4335" points="195.368421 256 256 195.368421 225.684211 190.196005 195.368421 195.368421 189.835162 223.098002"/><path d="M0,195.368421 L0,235.789474 C0,246.955789 9.04421053,256 20.2105263,256 L60.6315789,256 L66.8568645,225.684211 L60.6315789,195.368421 L27.5991874,190.196005 L0,195.368421 Z" fill="#188038"/><path d="M256,60.6315789 L256,20.2105263 C256,9.04421053 246.955789,0 235.789474,0 L195.368421,0 C191.679582,15.0358547 189.835162,26.1010948 189.835162,33.1957202 C189.835162,40.2903456 191.679582,49.4356319 195.368421,60.6315789 C208.777986,64.4714866 218.883249,66.3914404 225.684211,66.3914404 C232.485172,66.3914404 242.590435,64.4714866 256,60.6315789 Z" fill="#1967D2"/><polygon fill="#FBBC04" points="256 60.6315789 195.368421 60.6315789 195.368421 195.368421 256 195.368421"/><polygon fill="#34A853" points="195.368421 195.368421 60.6315789 195.368421 60.6315789 256 195.368421 256"/><path d="M195.368421,0 L20.2105263,0 C9.04421053,0 0,9.04421053 0,20.2105263 L0,195.368421 L60.6315789,195.368421 L60.6315789,60.6315789 L195.368421,60.6315789 L195.368421,0 Z" fill="#4285F4"/><path d="M88.2694737,165.153684 C83.2336842,161.751579 79.7473684,156.783158 77.8442105,150.214737 L89.5326316,145.397895 C90.5936842,149.44 92.4463158,152.572632 95.0905263,154.795789 C97.7178947,157.018947 100.917895,158.113684 104.656842,158.113684 C108.48,158.113684 111.764211,156.951579 114.509474,154.627368 C117.254737,152.303158 118.635789,149.338947 118.635789,145.751579 C118.635789,142.08 117.187368,139.082105 114.290526,136.757895 C111.393684,134.433684 107.755789,133.271579 103.410526,133.271579 L96.6568421,133.271579 L96.6568421,121.701053 L102.72,121.701053 C106.458947,121.701053 109.608421,120.690526 112.168421,118.669474 C114.728421,116.648421 116.008421,113.886316 116.008421,110.366316 C116.008421,107.233684 114.863158,104.741053 112.572632,102.871579 C110.282105,101.002105 107.385263,100.058947 103.865263,100.058947 C100.429474,100.058947 97.7010526,100.968421 95.68,102.804211 C93.6602819,104.644885 92.1418208,106.968942 91.2673684,109.557895 L79.6968421,104.741053 C81.2294737,100.395789 84.0421053,96.5557895 88.1684211,93.2378947 C92.2947368,89.92 97.5663158,88.2526316 103.966316,88.2526316 C108.698947,88.2526316 112.96,89.1621053 116.732632,90.9978947 C120.505263,92.8336842 123.469474,95.3768421 125.608421,98.6105263 C127.747368,101.861053 128.808421,105.498947 128.808421,109.541053 C128.808421,113.667368 127.814737,117.153684 125.827368,120.016842 C123.84,122.88 121.397895,125.069474 118.501053,126.602105 L118.501053,127.292632 C122.241568,128.834789 125.490747,131.367752 127.898947,134.618947 C130.341053,137.903158 131.570526,141.827368 131.570526,146.408421 C131.570526,150.989474 130.408421,155.082105 128.084211,158.669474 C125.76,162.256842 122.543158,165.086316 118.467368,167.141053 C114.374737,169.195789 109.776842,170.240124 104.673684,170.240124 C98.7621053,170.256842 93.3052632,168.555789 88.2694737,165.153684 Z M160.067368,107.149474 L147.233684,116.429474 L140.816842,106.694737 L163.84,90.0884211 L172.665263,90.0884211 L172.665263,168.421053 L160.067368,168.421053 L160.067368,107.149474 Z" fill="#4285F4"/></g></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:500;color:#f0f0f0;margin-bottom:4px;">Google Calendar</div>
+          <div style="font-size:12px;color:#666;line-height:1.5;">Calendar events synced to hub calendars. See schedules alongside your project tasks.</div>
+        </div>
+      </div>
+
+      <!-- Notion -->
+      <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="20" height="20" viewBox="0 0 32 32"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.716 29.2178L2.27664 24.9331C1.44913 23.9023 1 22.6346 1 21.3299V5.81499C1 3.86064 2.56359 2.23897 4.58071 2.10125L20.5321 1.01218C21.691 0.933062 22.8428 1.24109 23.7948 1.8847L29.3992 5.67391C30.4025 6.35219 31 7.46099 31 8.64426V26.2832C31 28.1958 29.4626 29.7793 27.4876 29.9009L9.78333 30.9907C8.20733 31.0877 6.68399 30.4237 5.716 29.2178Z" fill="#FFFFFF"/><path d="M11.2481 13.5787V13.3756C11.2481 12.8607 11.6605 12.4337 12.192 12.3982L16.0633 12.1397L21.417 20.0235V13.1041L20.039 12.9204V12.824C20.039 12.303 20.4608 11.8732 20.9991 11.8456L24.5216 11.6652V12.1721C24.5216 12.41 24.3446 12.6136 24.1021 12.6546L23.2544 12.798V24.0037L22.1906 24.3695C21.3018 24.6752 20.3124 24.348 19.8036 23.5803L14.6061 15.7372V23.223L16.2058 23.5291L16.1836 23.6775C16.1137 24.1423 15.7124 24.4939 15.227 24.5155L11.2481 24.6926C11.1955 24.1927 11.5701 23.7456 12.0869 23.6913L12.6103 23.6363V13.6552L11.2481 13.5787Z" fill="#000000"/><path fill-rule="evenodd" clip-rule="evenodd" d="M20.6749 2.96678L4.72347 4.05585C3.76799 4.12109 3.02734 4.88925 3.02734 5.81499V21.3299C3.02734 22.1997 3.32676 23.0448 3.87843 23.7321L7.3178 28.0167C7.87388 28.7094 8.74899 29.0909 9.65435 29.0352L27.3586 27.9454C28.266 27.8895 28.9724 27.1619 28.9724 26.2832V8.64426C28.9724 8.10059 28.6979 7.59115 28.2369 7.27951L22.6325 3.49029C22.0613 3.10413 21.3702 2.91931 20.6749 2.96678ZM5.51447 6.057C5.29261 5.89274 5.3982 5.55055 5.6769 5.53056L20.7822 4.44711C21.2635 4.41259 21.7417 4.54512 22.1309 4.82088L25.1617 6.96813C25.2767 7.04965 25.2228 7.22563 25.0803 7.23338L9.08387 8.10336C8.59977 8.12969 8.12193 7.98747 7.73701 7.7025L5.51447 6.057ZM8.33357 10.8307C8.33357 10.311 8.75341 9.88177 9.29027 9.85253L26.203 8.93145C26.7263 8.90296 27.1667 9.30534 27.1667 9.81182V25.0853C27.1667 25.604 26.7484 26.0328 26.2126 26.0633L9.40688 27.0195C8.8246 27.0527 8.33357 26.6052 8.33357 26.0415V10.8307Z" fill="#000000"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:500;color:#f0f0f0;margin-bottom:4px;">Notion</div>
+          <div style="font-size:12px;color:#666;line-height:1.5;">Workspace and database sync. Send tickets to Notion pages or pull Notion content into hubs.</div>
+        </div>
+      </div>
+
+      <!-- Gmail -->
+      <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path d="M45.16 21.17H24v6.4h12.14C34.97 33.6 30.08 37 24 37c-7.18 0-13-5.82-13-13s5.82-13 13-13c3.21 0 6.13 1.17 8.41 3.08l4.78-4.78C33.44 5.94 28.97 4 24 4 12.95 4 4 12.95 4 24s8.95 20 20 20c11.03 0 20-8.97 20-20 0-1-.09-2.05-.27-3.04l.43.21z" fill="#4285F4"/><path d="M6.31 14.69l5.57 4.08C13.46 15.34 18.35 12 24 12c3.21 0 6.13 1.17 8.41 3.08l4.78-4.78C33.44 5.94 28.97 4 24 4 16.32 4 9.68 8.41 6.31 14.69z" fill="#EA4335"/><path d="M24 44c4.76 0 9.08-1.74 12.45-4.58l-5.55-4.7C28.87 36.17 26.53 37 24 37c-6.04 0-10.91-3.36-12.13-9.37l-5.57 4.28C9.56 38.36 16.17 44 24 44z" fill="#34A853"/><path d="M44.73 21.17H24v6.4h12.14c-.87 3.15-2.82 5.61-5.24 7.25l5.55 4.7C40.36 36.07 44 30.58 44 24c0-1-.09-2.05-.27-3.04l1 .21z" fill="#FBBC04"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:500;color:#f0f0f0;margin-bottom:4px;">Gmail</div>
+          <div style="font-size:12px;color:#666;line-height:1.5;">Email integration for MAKi. Let MAKi send emails, forward files, and deliver messages on your behalf.</div>
+        </div>
+      </div>
+
+      <!-- GitHub -->
+      <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#f0f0f0" d="M12 .5C5.649.5.5 5.649.5 12A11.5 11.5 0 0 0 8.36 22.066c.575.106.785-.25.785-.555 0-.274-.01-1-.016-1.962-3.181.691-3.853-1.533-3.853-1.533-.52-1.321-1.27-1.673-1.27-1.673-1.039-.71.079-.695.079-.695 1.149.081 1.753 1.18 1.753 1.18 1.02 1.75 2.677 1.245 3.329.952.103-.739.4-1.245.727-1.531-2.54-.289-5.213-1.27-5.213-5.654 0-1.249.446-2.271 1.177-3.071-.118-.289-.51-1.452.112-3.026 0 0 .96-.307 3.146 1.173A10.97 10.97 0 0 1 12 6.03c.978.004 1.963.132 2.883.388 2.184-1.48 3.143-1.173 3.143-1.173.624 1.574.232 2.737.114 3.026.733.8 1.175 1.822 1.175 3.071 0 4.394-2.677 5.361-5.225 5.644.411.353.777 1.05.777 2.117 0 1.529-.014 2.761-.014 3.137 0 .308.207.667.79.554A11.503 11.503 0 0 0 23.5 12C23.5 5.649 18.351.5 12 .5Z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:500;color:#f0f0f0;margin-bottom:4px;">GitHub</div>
+          <div style="font-size:12px;color:#666;line-height:1.5;">Issue and repository sync. Link code changes to hub tasks and track development progress.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 
 <!-- MODAL -->
@@ -5356,17 +5815,17 @@ html.light-mode .testi-role { color: #666; }
     <div class="faq-list reveal d1">
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-t">Is this just another Slack clone?</span>
+          <span class="faq-q-t">Is MARKHUB a Slack replacement?</span>
           <span class="faq-ic">+</span>
         </div>
-        <div class="faq-a"><p class="faq-a-t">No. Slack is a communication layer. MARKHUB is the execution layer that sits on top. In Slack, tasks only exist if someone manually creates them. In MARKHUB, the AI reads every conversation and creates them automatically.</p></div>
+        <div class="faq-a"><p class="faq-a-t">Yes. MARKHUB combines chat, tasks, notes, calendar, files, and AI into one workspace. In Slack, tasks only exist if someone manually creates them. In MARKHUB, the AI reads every conversation and creates them automatically. You can also sync your existing Slack channels bi-directionally if you prefer a gradual transition.</p></div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-t">How is this different from Otter or Fireflies?</span>
+          <span class="faq-q-t">How is this different from Notion or Asana?</span>
           <span class="faq-ic">+</span>
         </div>
-        <div class="faq-a"><p class="faq-a-t">Otter and Fireflies record calls and give you a transcript. MARKHUB is a full workspace where conversation capture is just one channel. The output isn't a document, it's a task list ready to execute, inside the same app where your team works.</p></div>
+        <div class="faq-a"><p class="faq-a-t">Notion and Asana only know what someone manually enters. MARKHUB auto-populates tasks, notes, and follow-ups from your team's actual conversations. The output isn't a static document &mdash; it's a living workspace where chat, tasks, and context stay connected.</p></div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
@@ -5394,11 +5853,128 @@ html.light-mode .testi-role { color: #666; }
 </section>
 
 
+<!-- PRICING -->
+<section id="pricing" class="dark-section dark-forced" style="border-top:1px solid rgba(255,255,255,0.08);padding:100px 56px;background:#0A0A0A !important;color:#ccc !important;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:52px;">
+      <div class="d-eyebrow">Pricing</div>
+      <h2 class="d-h2">Start free.<br><span class="dim">Scale when ready.</span></h2>
+    </div>
+
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,0.06);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+
+      <!-- Free -->
+      <div style="background:#111;padding:32px 22px;display:flex;flex-direction:column;">
+        <div style="font-size:11px;font-weight:400;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Free</div>
+        <div style="display:flex;align-items:baseline;gap:2px;margin-bottom:8px;">
+          <span style="font-size:36px;font-weight:300;letter-spacing:-2px;color:#f0f0f0;">$0</span>
+        </div>
+        <div style="font-size:12px;color:#444;line-height:1.5;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.06);">For individuals and small teams getting started.</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;flex:1;margin-bottom:20px;">
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Up to 5 members</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 3 hubs</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 100 Chat AI / mo</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 10 Meeting AI / mo</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Calls: 3 people / 30 min</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 1 GB storage</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 90-day history</li>
+        </ul>
+        <a href="https://app.markhub.ai" target="_blank" class="pc-btn pc-btn-ghost" style="text-align:center;">Get Started</a>
+      </div>
+
+      <!-- Pro -->
+      <div style="background:#111;padding:32px 22px;display:flex;flex-direction:column;outline:1px solid rgba(255,255,255,0.14);z-index:1;position:relative;">
+        <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:#f0f0f0;color:#0a0a0a;font-size:9px;font-weight:300;padding:3px 12px;border-radius:0 0 8px 8px;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;">Most popular</div>
+        <div style="font-size:11px;font-weight:400;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Pro</div>
+        <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px;">
+          <span style="font-size:36px;font-weight:300;letter-spacing:-2px;color:#f0f0f0;">$19</span>
+          <span style="font-size:13px;color:#444;">/mo</span>
+        </div>
+        <div style="font-size:12px;color:#444;line-height:1.5;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.06);">For growing teams that need more power.</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;flex:1;margin-bottom:20px;">
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Unlimited members</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 10 hubs</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Unlimited Chat AI</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 100 Meeting AI / mo</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Calls: 15 people / unlimited</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 10 GB storage</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Unlimited history</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> API access</li>
+        </ul>
+        <a href="https://app.markhub.ai" target="_blank" class="pc-btn pc-btn-primary" style="text-align:center;">Start Pro Trial</a>
+      </div>
+
+      <!-- Growth -->
+      <div style="background:#111;padding:32px 22px;display:flex;flex-direction:column;">
+        <div style="font-size:11px;font-weight:400;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Growth</div>
+        <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px;">
+          <span style="font-size:36px;font-weight:300;letter-spacing:-2px;color:#f0f0f0;">$49</span>
+          <span style="font-size:13px;color:#444;">/mo</span>
+        </div>
+        <div style="font-size:12px;color:#444;line-height:1.5;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.06);">For scaling teams with heavier workloads.</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;flex:1;margin-bottom:20px;">
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Unlimited members</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Unlimited hubs</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Unlimited Chat AI</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 200 Meeting AI / mo</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Calls: 30 people / unlimited</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 50 GB storage</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Priority support</li>
+        </ul>
+        <a href="https://app.markhub.ai" target="_blank" class="pc-btn pc-btn-ghost" style="text-align:center;">Start Growth Trial</a>
+      </div>
+
+      <!-- Business -->
+      <div style="background:#111;padding:32px 22px;display:flex;flex-direction:column;">
+        <div style="font-size:11px;font-weight:400;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Business</div>
+        <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px;">
+          <span style="font-size:36px;font-weight:300;letter-spacing:-2px;color:#f0f0f0;">$99</span>
+          <span style="font-size:13px;color:#444;">/mo</span>
+        </div>
+        <div style="font-size:12px;color:#444;line-height:1.5;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.06);">For organizations that need security and compliance.</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;flex:1;margin-bottom:20px;">
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Everything in Growth</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 500 Meeting AI / mo</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Unlimited AI Agent</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Calls: 50 people / unlimited</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 100 GB storage</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> SSO / SAML / SCIM</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Audit logs (90 days)</li>
+        </ul>
+        <a href="https://app.markhub.ai" target="_blank" class="pc-btn pc-btn-ghost" style="text-align:center;">Contact Sales</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div style="background:#111;padding:32px 22px;display:flex;flex-direction:column;">
+        <div style="font-size:11px;font-weight:400;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Enterprise</div>
+        <div style="display:flex;align-items:baseline;gap:2px;margin-bottom:8px;">
+          <span style="font-size:36px;font-weight:300;letter-spacing:-2px;color:#f0f0f0;">Custom</span>
+        </div>
+        <div style="font-size:12px;color:#444;line-height:1.5;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.06);">For large teams with dedicated infrastructure needs.</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;flex:1;margin-bottom:20px;">
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Everything in Business</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Unlimited everything</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> DLP &amp; on-premise option</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> 365-day audit logs</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Dedicated infra</li>
+          <li style="font-size:12px;color:#888;display:flex;align-items:flex-start;gap:7px;line-height:1.4;"><span style="color:#3BAD65;flex-shrink:0;">&#10003;</span> Custom SLA</li>
+        </ul>
+        <a href="mailto:hello@markhub.ai" class="pc-btn pc-btn-ghost" style="text-align:center;">Contact Sales</a>
+      </div>
+
+    </div>
+
+    <div class="reveal" style="text-align:center;margin-top:32px;">
+      <p style="font-size:12px;color:#444;line-height:1.7;">All plans include: Real-time collaboration &middot; Cross-platform (Web, Mac, Windows, iOS, Android) &middot; 6 Data Bucket views &middot; Integrations (Slack, Discord, Google Calendar, Notion, Gmail, GitHub)</p>
+    </div>
+  </div>
+</section>
+
 <!-- CTA (light) -->
 <section id="cta">
   <div class="cta-inner reveal">
-    <h2 class="cta-h2">Start with MARKHUB<br><span class="dim">today.</span></h2>
-    <p class="cta-sub">No team needed. No setup. Your AI teammate starts working the moment you do.</p>
+    <h2 class="cta-h2">Stop organizing.<br><span class="dim">Start shipping.</span></h2>
+    <p class="cta-sub">Your AI teammate is ready. Free plan, no credit card, 60-second setup.</p>
     <div class="cta-btns">
       <a href="https://app.markhub.ai" target="_blank" class="btn-primary" style="font-size:15px;padding:14px 32px">Get Started Free <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="5 12 19 12"/><polyline points="13 6 19 12 13 18"/></svg></a>
       <a href="https://app.markhub.ai/invite/b8c80c7a4223bbd5bb5381f46dca9fb96d218505554337fed7aada68bb4a7cde" target="_blank" class="btn-secondary" style="font-size:15px;padding:14px 32px">Join Community</a>
@@ -5748,38 +6324,17 @@ window.addEventListener('scroll', updateNav, { passive: true });
   const pin     = document.getElementById('hero-pin');
   const hero    = document.getElementById('hero');
   const overlay = document.getElementById('hero-blur-overlay');
-  const logoBtn = document.getElementById('logoBtn');
-  if (!pin || !hero || !overlay || !logoBtn) return;
+  const appMock = document.getElementById('heroAppMock');
+  if (!pin || !hero || !overlay) return;
 
-  // Get element's position relative to a given ancestor by walking offsetParent chain
-  function offsetFrom(el, ancestor) {
-    let top = 0, left = 0, cur = el;
-    while (cur && cur !== ancestor) {
-      top  += cur.offsetTop;
-      left += cur.offsetLeft;
-      cur   = cur.offsetParent;
-    }
-    return { top, left };
-  }
-
-  // Pin height = hero height + extra scroll room
   const EXTRA = 380;
 
   function setup() {
     const heroH = hero.offsetHeight;
     pin.style.height = (heroH + EXTRA) + 'px';
-
-    // Logo center in px, relative to hero (walk offsetParent chain)
-    const pos = offsetFrom(logoBtn, hero);
-    const cx  = pos.left + logoBtn.offsetWidth  / 2;
-    const cy  = pos.top  + logoBtn.offsetHeight / 2;
-
-    // r1 = logo half-width + small gap, r2 = feather edge
-    const r1  = logoBtn.offsetWidth / 2 + 10;
-    const r2  = logoBtn.offsetWidth / 2 + 52;
-    const hole = `radial-gradient(circle at ${Math.round(cx)}px ${Math.round(cy)}px, transparent ${r1}px, black ${r2}px)`;
-    overlay.style.maskImage       = hole;
-    overlay.style.webkitMaskImage = hole;
+    // Simple full overlay — no hole needed
+    overlay.style.maskImage       = 'none';
+    overlay.style.webkitMaskImage = 'none';
   }
 
   setup();
@@ -5789,7 +6344,6 @@ window.addEventListener('scroll', updateNav, { passive: true });
     const pinTop   = pin.getBoundingClientRect().top;
     const progress = Math.max(0, Math.min(1, -pinTop / EXTRA));
 
-    // fade-in 0→0.3, hold 0.3→0.7, fade-out 0.7→1
     let o = 0;
     if      (progress < 0.3) o = progress / 0.3;
     else if (progress < 0.7) o = 1;
@@ -5797,9 +6351,11 @@ window.addEventListener('scroll', updateNav, { passive: true });
 
     overlay.style.opacity = o.toFixed(3);
 
-    // subtle logo scale
-    const s = 1 + 0.05 * Math.sin(progress * Math.PI);
-    logoBtn.style.transform = `scale(${s.toFixed(4)})`;
+    // subtle scale on app mock
+    if (appMock) {
+      const s = 1 + 0.02 * Math.sin(progress * Math.PI);
+      appMock.style.transform = `scale(${s.toFixed(4)})`;
+    }
   }, { passive: true });
 })();
 
@@ -5991,7 +6547,6 @@ document.querySelectorAll('.mock-tab').forEach(t => {
 })();
 
 // ── MODAL ──
-const logoBtn = document.getElementById('logoBtn');
 const overlay = document.getElementById('modalOverlay');
 
 const UC_DATA = {
@@ -6877,18 +7432,19 @@ document.querySelectorAll('.m-uc-tab').forEach(tab => {
   });
 });
 
-if (logoBtn && overlay) {
-  const openModal = () => {
+if (overlay) {
+  function openModal() {
     overlay.classList.add('open');
     currentUC = 'startup';
     document.querySelectorAll('.m-uc-tab').forEach(t => t.classList.remove('on'));
     const first = document.querySelector('[data-uc="startup"]');
     if (first) first.classList.add('on');
     runDemo();
-  };
-  logoBtn.addEventListener('click', openModal);
-  const logoHint = document.querySelector('.logo-hint');
-  if (logoHint) logoHint.addEventListener('click', openModal);
+  }
+  // "See it in action" button opens modal
+  document.querySelectorAll('a[href="#features"]').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); openModal(); });
+  });
   function closeModal() {
     overlay.classList.remove('open');
     clearDemo();
@@ -6899,192 +7455,564 @@ if (logoBtn && overlay) {
   overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 }
-// ── HERO TRANSFORM ANIMATION ──────────────────
+// ── HERO APP MOCK ANIMATION (multi-scene) ─────
 (function() {
-  const HT_CARDS = [
-    { type:'task',    icon:'🎫', label:'Task Created',   title:'Fix auth token expiry on upload endpoint',    meta:'Jein Song · Due Fri',      color:'#8FA8C8' },
-    { type:'email',   icon:'📧', label:'Email Sent',     title:'Series A follow-up sent to 3 investors',      meta:'via Gmail · just now',      color:'#C8A97A' },
-    { type:'notice',  icon:'📢', label:'Notice Posted',  title:'Sprint tickets, please update your status',  meta:'Monthly Sprint · all members', color:'#B0A0D8' },
-    { type:'note',    icon:'📋', label:'Meeting Note',   title:'Q2 Exec Sync, 5 action items extracted',     meta:'MAKi · auto-generated',     color:'#8FC89A' },
-    { type:'task',    icon:'🎫', label:'Task Created',   title:'Figma cleanup and AI screen design review',   meta:'Hayeon Song · Due Mon',     color:'#8FC89A' },
-    { type:'file',    icon:'📎', label:'File Sent',      title:'Pitch deck v3 delivered to Kakao Ventures',   meta:'via Email · 2.4MB PDF',     color:'#D4887A' },
-    { type:'task',    icon:'🎫', label:'Task Created',   title:'Python server implementation for agents',     meta:'Jein Song · Due Thu',       color:'#8FA8C8' },
-    { type:'summary', icon:'✨', label:'Summary Ready',  title:'Weekly sprint recap · 12 items completed',    meta:'MAKi · sent to #monthly-sprint', color:'#A8C8B0' },
-    { type:'email',   icon:'📧', label:'Email Sent',     title:'Client proposal sent with budget breakdown',  meta:'via Gmail · attached file', color:'#C8A97A' },
-    { type:'notice',  icon:'📢', label:'Notice Posted',  title:'Team lunch rescheduled to 1pm tomorrow',      meta:'Any Topic Hub · 6 members', color:'#B0A0D8' },
-  ];
-  const HT_BUBBLES = [
-    "Who's taking this one?", "Let's make it a task", "I'll finish by Sunday",
-    "Can you handle the API?", "Need this by Monday", "On it 👍",
-    "Let's ship this week", "Who owns the follow-up?", "I'll take the backend",
-    "Schedule a review", "Blocking us right now", "Mark it in progress",
-    "Can we move the deadline?", "Assign it to Jein", "Done on my end",
-    "Let's sync tomorrow", "Waiting on design", "Almost there",
-    "Add to the sprint", "Flag this as urgent", "Copy that, will do",
-  ];
+  const chatBody     = document.getElementById('hamChatBody');
+  const todoCards    = document.getElementById('hamTodoCards');
+  const noteCards    = document.getElementById('hamNoteCards');
+  const todoCount    = document.getElementById('hamTodoCount');
+  const notesCount   = document.getElementById('hamNotesCount');
+  const makiInd      = document.getElementById('hamMakiIndicator');
+  const makiText     = document.getElementById('hamMakiText');
+  const sceneLabel   = document.getElementById('hamSceneLabel');
+  const composerTog  = document.getElementById('hamComposerToggle');
+  const composerText = document.getElementById('hamComposerText');
+  const togChat = document.getElementById('hamTogChat');
+  const togBot  = document.getElementById('hamTogBot');
+  const bucketTodo   = document.getElementById('hamBucketTodo');
+  const bucketNotes  = document.getElementById('hamBucketNotes');
+  const bucketTabs   = document.getElementById('hamBucketTabs');
+  const headerExtra  = document.getElementById('hamHeaderExtra');
+  const sloganBar    = document.getElementById('hamSloganBar');
+  const sloganEl     = document.getElementById('hamSloganText');
+  if (!chatBody) return;
 
-  const HT_PROFILES = [
-    { name: 'Yoon Shin',   color: '#C8A97A', init: 'Y' },
-    { name: 'Jein Song',   color: '#8FA8C8', init: 'J' },
-    { name: 'Hayeon Song', color: '#8FC89A', init: 'H' },
-    { name: 'YK Han',      color: '#B0A0D8', init: 'K' },
-    { name: 'Minh Le',     color: '#D4887A', init: 'M' },
-    { name: 'Sara Kim',    color: '#A8C8B0', init: 'S' },
+  const SLOGANS = [
+    'Every conversation becomes *knowledge.* Every word, *valuable.*',
+    'Together or apart. Not just notes — *action, instantly.*',
+    'The more you work, the *smarter MAKi gets.* Your AI teammate, *always learning.*',
+    'Say it *however you want.* MAKi already *knows what you mean.*',
+    'Your tools, *unchanged.* Now *unified.*',
   ];
 
-  const htLeft  = document.getElementById('leftZone');
-  const htRight = document.getElementById('rightZone');
-  if (!htLeft || !htRight) return;
-
-  // ── Bubbles (left side), with avatar + name ──
-  let bubbleProfileIdx = 0;
-  function htSpawnBubble() {
-    const profile = HT_PROFILES[bubbleProfileIdx % HT_PROFILES.length];
-    bubbleProfileIdx++;
-
-    const el = document.createElement('div');
-    el.className = 'ht-bubble';
-    const h      = htLeft.offsetHeight;
-    const travel = htLeft.offsetWidth + 80;
-    const dur    = 4000 + Math.random() * 2000;
-    el.style.setProperty('--travel', travel + 'px');
-    el.style.top               = (36 + Math.random() * (h - 80)) + 'px';
-    el.style.left              = (-10 - Math.random() * 40) + 'px';
-    el.style.animationDuration = dur + 'ms';
-    el.innerHTML = `
-      <div class="ht-bubble-av" style="background:${profile.color}">${profile.init}</div>
-      <div class="ht-bubble-content">
-        <div class="ht-bubble-name">${profile.name}</div>
-        <div class="ht-bubble-msg">${HT_BUBBLES[Math.floor(Math.random() * HT_BUBBLES.length)]}</div>
-      </div>`;
-    htLeft.appendChild(el);
-    setTimeout(() => el.remove(), dur + 100);
+  let sloganTimer = null;
+  function showSlogan(idx) {
+    if (!sloganBar || !sloganEl) return;
+    if (sloganTimer) { clearTimeout(sloganTimer); sloganTimer = null; }
+    const text = SLOGANS[idx] || '';
+    // Split into words, wrap *emphasized* in .sl-em
+    const words = text.split(/\s+/);
+    sloganEl.innerHTML = words.map(w => {
+      let inner = w;
+      if (w.startsWith('*') && w.endsWith('*')) {
+        inner = `<span class="sl-em">${w.slice(1, -1)}</span>`;
+      } else if (w.startsWith('*')) {
+        inner = `<span class="sl-em">${w.slice(1)}`;
+      } else if (w.endsWith('*')) {
+        inner = `${w.slice(0, -1)}</span>`;
+      }
+      return `<span class="sl-word">${inner}</span>`;
+    }).join(' ');
+    sloganBar.classList.add('visible');
+    // Reveal word by word
+    const wordEls = sloganEl.querySelectorAll('.sl-word');
+    wordEls.forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 80 + i * 70);
+    });
   }
-  setInterval(htSpawnBubble, 900);
-  [100, 500, 900, 1400, 1900].forEach(t => setTimeout(htSpawnBubble, t));
-
-  // ── 2-card cycle: appear staggered → hold → shoot right ──
-  const isMobileInit = window.innerWidth < 768;
-  const CARD_H   = isMobileInit ? 78 : 90;
-  const CARD_GAP = isMobileInit ? 8  : 10;
-  const STACK_N  = 3;
-  const HOLD_MS  = 1000;
-  const STAGGER  = 100;
-  const PAUSE_MS = 600;
-
-  let htCardIdx = 0;
-  let busy      = false;
-
-  function getSlotTop(i) {
-    const zoneH  = htRight.offsetHeight;
-    const total  = STACK_N * CARD_H + (STACK_N - 1) * CARD_GAP;
-    const startY = (zoneH - total) / 2;
-    return startY + i * (CARD_H + CARD_GAP);
+  function clearSlogan() {
+    if (!sloganBar) return;
+    if (sloganTimer) { clearTimeout(sloganTimer); sloganTimer = null; }
+    const words = sloganEl ? sloganEl.querySelectorAll('.sl-word') : [];
+    words.forEach(w => { w.style.transition = 'all 0.3s ease'; w.classList.remove('visible'); });
+    sloganBar.classList.remove('visible');
+    sloganTimer = setTimeout(() => { if (sloganEl) sloganEl.innerHTML = ''; sloganTimer = null; }, 500);
   }
 
-  function makeCardEl(data) {
+  const PROFILES = [
+    { name:'Yoon Shin',   color:'#C8A97A', init:'Y' },
+    { name:'Jein Song',   color:'#8FA8C8', init:'J' },
+    { name:'Robert Lee', color:'#8FC89A', init:'R' },
+    { name:'YK Han',      color:'#B0A0D8', init:'K' },
+    { name:'Minh Le',     color:'#D4887A', init:'M' },
+    { name:'Sara Kim',    color:'#A8C8B0', init:'S' },
+  ];
+  const MAKI = { name:'MAKi', color:'#BFFF00', init:'M' };
+
+  let sceneTimer = [];
+  function after(ms, fn) { sceneTimer.push(setTimeout(fn, ms)); }
+  function clearTimers() { sceneTimer.forEach(t => clearTimeout(t)); sceneTimer = []; }
+
+  function addMsg(profile, text, opts = {}) {
     const el = document.createElement('div');
-    el.className = 'ht-task-card';
+    el.className = 'ham-msg' + (opts.maki ? ' maki-msg' : '');
     el.innerHTML = `
-      <div class="ht-tc-top">
-        <span class="ht-tc-badge ip" style="background:rgba(255,255,255,0.07);color:#999;font-size:11px;letter-spacing:0.04em;">${data.icon} ${data.label}</span>
-      </div>
-      <div class="ht-tc-title">${data.title}</div>
-      <div class="ht-tc-footer">
-        <div class="ht-tc-av" style="background:${data.color}">${data.color[1]}</div>
-        <span class="ht-tc-name">${data.meta}</span>
+      <div class="ham-msg-av" style="background:${profile.color}">${profile.init}</div>
+      <div class="ham-msg-body">
+        <div class="ham-msg-name">${profile.name}${opts.tag ? ` <span style="font-size:8px;color:#555;font-weight:400;margin-left:4px;">${opts.tag}</span>` : ''}</div>
+        <div class="ham-msg-text">${text}</div>
       </div>`;
+    chatBody.appendChild(el);
+    chatBody.scrollTop = chatBody.scrollHeight;
     return el;
   }
 
-  function runCycle() {
-    if (busy) return;
-    busy = true;
-    const stackEls = [];
-    const isMobile = window.innerWidth < 768;
-
-    function addCard(slotIdx) {
-      if (slotIdx >= STACK_N) {
-        setTimeout(shootAll, HOLD_MS);
-        return;
-      }
-
-      const logoBtn  = document.getElementById('logoBtn');
-      const logoRect = logoBtn.getBoundingClientRect();
-      const zoneRect = htRight.getBoundingClientRect();
-      const logoCX   = (logoRect.left + logoRect.width  / 2) - zoneRect.left;
-      const logoCY   = (logoRect.top  + logoRect.height / 2) - zoneRect.top;
-
-      const slotTop  = getSlotTop(slotIdx);
-      const data = HT_CARDS[htCardIdx % HT_CARDS.length];
-      htCardIdx++;
-
-      const el = makeCardEl(data);
-      el.style.top = slotTop + 'px';
-      el.style.opacity = '0';
-
-      if (isMobile) {
-        // mobile: fill the zone width, no centering trick
-        el.style.left   = '8px';
-        el.style.width  = (zoneRect.width - 16) + 'px';
-        const cardCY = slotTop + CARD_H / 2;
-        const dy = logoCY - cardCY;
-        el.style.transform = `translateY(${dy}px) scale(0.18)`;
-        htRight.appendChild(el);
-        stackEls.push(el);
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          el.style.transition = 'transform 0.65s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease';
-          el.style.transform  = 'translateY(0) scale(1)';
-          el.style.opacity    = '1';
-          setTimeout(() => {
-            el.style.transition = '';
-            setTimeout(() => addCard(slotIdx + 1), 320);
-          }, 680);
-        }));
-      } else {
-        // desktop: centered with translateX(-50%)
-        const cardCX = zoneRect.width / 2;
-        const cardCY = slotTop + CARD_H / 2;
-        const dx = logoCX - cardCX;
-        const dy = logoCY - cardCY;
-        el.style.transform = `translateX(calc(-50% + ${dx}px)) translateY(${dy}px) scale(0.18)`;
-        htRight.appendChild(el);
-        stackEls.push(el);
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          el.style.transition = 'transform 0.65s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease';
-          el.style.transform  = 'translateX(-50%)';
-          el.style.opacity    = '1';
-          setTimeout(() => {
-            el.style.transition = '';
-            setTimeout(() => addCard(slotIdx + 1), 320);
-          }, 680);
-        }));
-      }
-    }
-
-    function shootAll() {
-      const isMob = window.innerWidth < 768;
-      stackEls.forEach((el, i) => {
-        setTimeout(() => {
-          el.style.transition = '';
-          el.style.transform  = isMob ? 'translateY(0) scale(1)' : 'translateX(-50%)';
-          el.style.opacity    = '1';
-          el.classList.add('shooting');
-          el.addEventListener('animationend', () => el.remove(), { once: true });
-        }, i * STAGGER);
-      });
-      const done = (STACK_N - 1) * STAGGER + 950;
-      setTimeout(() => {
-        busy = false;
-        runCycle();
-      }, done + PAUSE_MS);
-    }
-
-    addCard(0);
+  // Slack Bot style message (matches actual app UI)
+  function addSlackMsg(sender, channel, text) {
+    const el = document.createElement('div');
+    el.className = 'ham-msg';
+    el.innerHTML = `
+      <div class="ham-msg-av" style="background:#E01E5A;border-radius:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.122 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zm-1.268 0a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zm-2.523 10.122a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zm0-1.268a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
+      </div>
+      <div class="ham-msg-body">
+        <div class="ham-msg-name" style="display:flex;align-items:center;gap:6px;">Slack Bot
+          <span style="display:inline-flex;align-items:center;gap:3px;font-size:8px;padding:2px 7px;border-radius:4px;background:rgba(224,30,90,0.08);color:#E01E5A;font-weight:500;">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="#E01E5A"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313z"/></svg>
+            ${sender} · ${channel}
+          </span>
+        </div>
+        <div class="ham-msg-text">${text}</div>
+        <div style="margin-top:5px;">
+          <span style="display:inline-flex;align-items:center;gap:4px;font-size:9px;padding:3px 10px;border-radius:6px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#888;cursor:default;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="#888"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313z"/></svg>
+            View in Slack
+          </span>
+        </div>
+      </div>`;
+    chatBody.appendChild(el);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    return el;
   }
 
-  // Kick off after 1.8s
-  setTimeout(runCycle, 1800);
+  // Inline ticket card in chat (like actual app)
+  function addTicketMsg(profile, ticketTitle, ticketOpts = {}) {
+    const status = ticketOpts.status || 'Not Started';
+    const statusColor = status === 'Done' ? '#3BAD65' : status === 'In Progress' ? '#FEBC2E' : '#888';
+    const priority = ticketOpts.priority || 'Medium';
+    const prioColor = priority === 'High' ? '#FF5F57' : priority === 'Medium' ? '#FEBC2E' : '#3BAD65';
+    const assignee = ticketOpts.assignee || profile;
+    const date = ticketOpts.date || '2026-04-16';
+    const el = document.createElement('div');
+    el.className = 'ham-msg';
+    el.innerHTML = `
+      <div class="ham-msg-av" style="background:${profile.color}">${profile.init}</div>
+      <div class="ham-msg-body">
+        <div class="ham-msg-name">${profile.name} <span style="font-size:8px;color:#555;font-weight:400;margin-left:4px;">${ticketOpts.time || ''}</span></div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 12px;margin-top:4px;animation:hamMsgIn 0.4s ease forwards;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+            <span style="display:inline-flex;align-items:center;gap:3px;font-size:8px;padding:2px 7px;border-radius:4px;background:rgba(${statusColor === '#3BAD65' ? '59,173,101' : statusColor === '#FEBC2E' ? '254,188,46' : '136,136,136'},0.12);color:${statusColor};font-weight:500;">● ${status}</span>
+            <span style="display:inline-flex;align-items:center;gap:3px;font-size:8px;padding:2px 7px;border-radius:4px;background:rgba(${prioColor === '#FF5F57' ? '255,95,87' : prioColor === '#FEBC2E' ? '254,188,46' : '59,173,101'},0.12);color:${prioColor};font-weight:500;">● ${priority}</span>
+          </div>
+          <div style="font-size:11px;color:#ddd;font-weight:500;line-height:1.4;margin-bottom:6px;">${ticketTitle}</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:#666;">
+            <div style="width:14px;height:14px;border-radius:50%;background:${assignee.color};display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:600;color:#fff;">${assignee.init}</div>
+            ${assignee.name} · ${date}
+          </div>
+        </div>
+      </div>`;
+    chatBody.appendChild(el);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    return el;
+  }
+
+  function addTask(title, assignee, opts = {}) {
+    const el = document.createElement('div');
+    el.className = 'ham-card new-card';
+    el.innerHTML = `
+      ${opts.badge ? `<div class="ham-card-badge">${opts.badge}</div>` : ''}
+      <div class="ham-card-title">${title}</div>
+      <div class="ham-card-meta">
+        <div class="ham-card-av" style="background:${assignee.color}">${assignee.init}</div>
+        <span>${assignee.name}${opts.due ? ' · ' + opts.due : ''}</span>
+      </div>`;
+    todoCards.insertBefore(el, todoCards.firstChild);
+    const count = todoCards.children.length;
+    todoCount.textContent = count;
+    return el;
+  }
+
+  function addNote(title, sub) {
+    const el = document.createElement('div');
+    el.className = 'ham-card new-card';
+    el.innerHTML = `
+      <div class="ham-card-badge">📋 Auto-generated</div>
+      <div class="ham-card-title">${title}</div>
+      <div class="ham-card-meta"><span>${sub}</span></div>`;
+    noteCards.insertBefore(el, noteCards.firstChild);
+    notesCount.textContent = noteCards.children.length;
+    return el;
+  }
+
+  function setMaki(text, visible) {
+    makiText.textContent = text;
+    makiInd.classList.toggle('visible', visible);
+  }
+
+  function setScene(text) {
+    if (text) { sceneLabel.textContent = text; sceneLabel.style.opacity = '1'; }
+    else { sceneLabel.style.opacity = '0'; }
+  }
+
+  function switchBucketTab(tab) {
+    bucketTabs.querySelectorAll('.ham-bt').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+    bucketTodo.style.display  = tab === 'todo'  ? '' : 'none';
+    bucketNotes.style.display = tab === 'notes' ? '' : 'none';
+  }
+
+  function clearChat() {
+    chatBody.innerHTML = '';
+    // Also remove any leftover banners from parent
+    chatBody.parentElement.querySelectorAll('.ham-call-banner').forEach(b => b.remove());
+  }
+  function clearTodo() { todoCards.innerHTML = ''; todoCount.textContent = '0'; }
+  function clearNotes() { noteCards.innerHTML = ''; notesCount.textContent = '0'; }
+
+  let currentMode = 'chat';
+  function setComposer(mode, animate) {
+    if (mode === currentMode && !animate) return;
+    currentMode = mode;
+    const activeBtn = mode === 'bot' ? togBot : togChat;
+    if (animate) {
+      activeBtn.style.transition = 'all 0.3s cubic-bezier(0.16,1,0.3,1)';
+      activeBtn.style.transform = 'scale(0.9)';
+      setTimeout(() => {
+        applyMode(mode);
+        activeBtn.style.transform = 'scale(1.05)';
+        setTimeout(() => { activeBtn.style.transform = 'scale(1)'; }, 150);
+      }, 150);
+    } else {
+      applyMode(mode);
+    }
+  }
+  function applyMode(mode) {
+    if (mode === 'bot') {
+      togBot.style.background = 'rgba(255,255,255,0.95)';
+      togBot.style.color = '#1D1D1D';
+      togBot.style.fontWeight = '600';
+      togChat.style.background = 'transparent';
+      togChat.style.color = '#666';
+      togChat.style.fontWeight = '500';
+      composerText.innerHTML = 'Ask MAKi-bot — <span style="color:#9B8FFF;font-style:italic;">Summarize the meeting notes</span>';
+    } else {
+      togChat.style.background = 'rgba(255,255,255,0.95)';
+      togChat.style.color = '#1D1D1D';
+      togChat.style.fontWeight = '600';
+      togBot.style.background = 'transparent';
+      togBot.style.color = '#666';
+      togBot.style.fontWeight = '500';
+      composerText.innerHTML = 'Type a message...';
+    }
+  }
+
+  // ═══════════════════════════════════════════
+  // SCENE 1: Team chat → MAKi auto-extracts tasks
+  // ═══════════════════════════════════════════
+  function scene1(onDone) {
+    setScene('Scene 1 · Team Chat');
+    switchBucketTab('todo');
+    setComposer('chat', false);
+    setMaki('MAKi is listening...', true);
+    headerExtra.textContent = '';
+
+    after(400, () => addMsg(PROFILES[0], "Hey team, let's finalize the launch plan."));
+    after(1200, () => addMsg(PROFILES[1], "I can handle the API integration. Need it by Friday?"));
+    after(2200, () => addMsg(PROFILES[2], "I'll prep the design assets. Can someone review the copy?"));
+    after(3200, () => addMsg(PROFILES[3], "I'll review the copy. Also — we need to update the pricing page."));
+    // Toggle to Bot mode
+    after(4200, () => {
+      setComposer('bot', true);
+      setMaki('MAKi is extracting tasks...', true);
+    });
+    after(5000, () => {
+      addMsg(MAKI, '✨ I found <strong>3 tasks</strong> in this conversation. Creating them now...', { maki: true });
+    });
+    // Ticket cards appear in chat + bucket simultaneously
+    after(5800, () => {
+      addTicketMsg(MAKI, 'API integration for launch', { status:'Not Started', priority:'High', assignee:PROFILES[1], date:'Due Fri', time:'' });
+      addTask('API integration for launch', PROFILES[1], { badge:'✨ Auto-created', due:'Due Fri' });
+    });
+    after(6400, () => {
+      addTicketMsg(MAKI, 'Prep design assets for launch', { status:'Not Started', priority:'Medium', assignee:PROFILES[2], date:'Due Thu', time:'' });
+      addTask('Prep design assets for launch', PROFILES[2], { badge:'✨ Auto-created', due:'Due Thu' });
+    });
+    after(7000, () => {
+      addTicketMsg(MAKI, 'Update pricing page copy', { status:'Not Started', priority:'Medium', assignee:PROFILES[3], date:'Due Wed', time:'' });
+      addTask('Update pricing page copy', PROFILES[3], { badge:'✨ Auto-created', due:'Due Wed' });
+    });
+    // Toggle back to Chat mode
+    after(7800, () => {
+      setComposer('chat', true);
+      setMaki('MAKi extracted 3 tasks', true);
+    });
+    after(8600, () => addMsg(PROFILES[0], "Perfect, thanks MAKi! Team, let's knock these out by Friday."));
+    after(10400, () => { setMaki('', false); setScene(''); onDone(); });
+  }
+
+  // ═══════════════════════════════════════════
+  // SCENE 2: Meeting ends → Notes auto-generated
+  // ═══════════════════════════════════════════
+  function scene2(onDone) {
+    clearChat(); clearTodo();
+    setScene('Scene 2 · Hub Call');
+    switchBucketTab('notes');
+    setComposer('chat', false);
+    headerExtra.innerHTML = '<span style="display:inline-flex;align-items:center;gap:4px;font-size:9px;color:#FF5F57;font-weight:500;"><span style="width:5px;height:5px;border-radius:50%;background:#FF5F57;display:inline-block;animation:makiPulse 1s infinite;"></span> Recording · 08:42</span>';
+
+    // Show video call UI in chat area
+    const callUI = document.createElement('div');
+    callUI.id = 'hamCallUI';
+    callUI.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px;flex:1;';
+    const callParticipants = [PROFILES[0], PROFILES[1], PROFILES[4], PROFILES[5]];
+    callUI.innerHTML = `
+      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#FF5F57;font-weight:500;">
+        <span style="width:6px;height:6px;border-radius:50%;background:#FF5F57;animation:makiPulse 1s infinite;"></span>
+        Hub Call · Q2 Roadmap Sync
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:320px;margin-top:8px;">
+        ${callParticipants.map(p => `
+          <div style="background:#1a1a1a;border-radius:10px;padding:20px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;border:1px solid rgba(255,255,255,0.06);">
+            <div style="width:40px;height:40px;border-radius:50%;background:${p.color};display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;color:#fff;">${p.init}</div>
+            <div style="font-size:10px;color:#ccc;font-weight:500;">${p.name}</div>
+            <div style="display:flex;align-items:center;gap:3px;">
+              <span style="width:3px;height:8px;background:${p === PROFILES[0] ? '#3BAD65' : '#555'};border-radius:1px;animation:${p === PROFILES[0] ? 'hamVolume 0.8s ease infinite' : 'none'};"></span>
+              <span style="width:3px;height:12px;background:${p === PROFILES[0] ? '#3BAD65' : '#555'};border-radius:1px;animation:${p === PROFILES[0] ? 'hamVolume 0.8s ease 0.1s infinite' : 'none'};"></span>
+              <span style="width:3px;height:6px;background:${p === PROFILES[0] ? '#3BAD65' : '#555'};border-radius:1px;animation:${p === PROFILES[0] ? 'hamVolume 0.8s ease 0.2s infinite' : 'none'};"></span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" fill="#999" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+        </div>
+        <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" fill="#999" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+        </div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#FF5F57;display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" fill="#fff" viewBox="0 0 24 24"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08c-.18-.17-.29-.42-.29-.7 0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.11-.7-.28-.79-.74-1.69-1.36-2.67-1.85-.33-.16-.56-.5-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/></svg>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#555;margin-top:2px;">12:42 elapsed · MAKi is recording</div>
+    `;
+    chatBody.appendChild(callUI);
+
+    // Simulate speaking indicators changing
+    after(1200, () => {
+      // Simulate Jein speaking
+      const avatars = callUI.querySelectorAll('[style*="grid-template"]>div');
+      if (avatars[1]) {
+        const bars = avatars[1].querySelectorAll('span[style*="width:3px"]');
+        bars.forEach((b,i) => { b.style.background = '#3BAD65'; b.style.animation = `hamVolume 0.8s ease ${i*0.1}s infinite`; });
+      }
+      if (avatars[0]) {
+        const bars = avatars[0].querySelectorAll('span[style*="width:3px"]');
+        bars.forEach(b => { b.style.background = '#555'; b.style.animation = 'none'; });
+      }
+    });
+    after(2400, () => {
+      // Minh speaking
+      const avatars = callUI.querySelectorAll('[style*="grid-template"]>div');
+      if (avatars[2]) {
+        const bars = avatars[2].querySelectorAll('span[style*="width:3px"]');
+        bars.forEach((b,i) => { b.style.background = '#3BAD65'; b.style.animation = `hamVolume 0.8s ease ${i*0.1}s infinite`; });
+      }
+      if (avatars[1]) {
+        const bars = avatars[1].querySelectorAll('span[style*="width:3px"]');
+        bars.forEach(b => { b.style.background = '#555'; b.style.animation = 'none'; });
+      }
+    });
+
+    // Call ends
+    after(3800, () => {
+      // Show "Summary completed" banner over call UI (centered on call grid)
+      const banner = document.createElement('div');
+      banner.className = 'ham-call-banner';
+      banner.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(59,173,101,0.12);border:1px solid rgba(59,173,101,0.3);border-radius:10px;padding:12px 20px;text-align:center;z-index:5;animation:hamMsgIn 0.4s ease forwards;';
+      banner.innerHTML = `
+        <div style="font-size:11px;font-weight:600;color:#3BAD65;margin-bottom:3px;">✓ Summary completed · Tasks extracted</div>
+        <div style="font-size:9px;color:#888;">12m 34s · 4 participants · MAKi recorded</div>
+      `;
+      chatBody.style.position = 'relative';
+      chatBody.appendChild(banner);
+      callUI.style.transition = 'opacity 0.5s';
+      callUI.style.opacity = '0.3';
+      headerExtra.innerHTML = '<span style="font-size:9px;color:#3BAD65;font-weight:500;">✓ Call ended · 12m 34s</span>';
+    });
+
+    // Clear call UI, show chat with summary
+    after(5200, () => {
+      chatBody.innerHTML = '';
+      chatBody.style.position = '';
+      setMaki('MAKi is generating meeting notes...', true);
+      addMsg(MAKI, '📋 Meeting summary ready. <strong>4 action items</strong> extracted from the call.', { maki: true });
+    });
+    after(5900, () => addNote('Q2 Roadmap Sync', 'Summary · 4 action items · 12m 34s'));
+    after(6500, () => {
+      switchBucketTab('todo');
+      after(300, () => addTask('Scope backend for mobile app', PROFILES[1], { badge:'📋 From meeting', due:'Due Mon' }));
+      after(700, () => addTask('Start onboarding flow designs', PROFILES[5], { badge:'📋 From meeting', due:'Next week' }));
+    });
+    after(9000, () => { setMaki('', false); setScene(''); headerExtra.textContent = ''; onDone(); });
+  }
+
+  // ═══════════════════════════════════════════
+  // SCENE 3: MAKi insight — decision support
+  // ═══════════════════════════════════════════
+  function scene3(onDone) {
+    clearChat(); clearTodo(); clearNotes();
+    setScene('Scene 3 · AI Insights');
+    switchBucketTab('todo');
+    setComposer('chat', false);
+    headerExtra.textContent = '';
+
+    // Toggle chat → bot
+    after(300, () => setComposer('bot', true));
+    after(800, () => {
+      addMsg(PROFILES[0], "@MAKi What's blocking us this sprint?", { tag:'to MAKi' });
+    });
+    after(1600, () => setMaki('MAKi is analyzing project data...', true));
+    after(2600, () => {
+      addMsg(MAKI, `Based on the last 47 messages and 12 tasks:<br><br>
+        <strong style="color:#FF5F57;">2 blockers found:</strong><br>
+        · API auth token — assigned to Jein, <span style="color:#FF5F57;">3 days overdue</span><br>
+        · Design review — waiting on Robert since Tuesday<br><br>
+        <strong style="color:#BFFF00;">Recommendation:</strong> Reassign auth task to YK (available), ping Robert for review.`, { maki: true });
+    });
+    after(4800, () => {
+      addMsg(PROFILES[0], "Good call. @MAKi reassign auth task to YK and notify Robert.", { tag:'to MAKi' });
+    });
+    after(5800, () => {
+      addMsg(MAKI, '✅ Done. Auth task reassigned to YK Han. Robert notified via DM.', { maki: true });
+    });
+    after(6500, () => addTask('Auth token fix (reassigned)', PROFILES[3], { badge:'🔄 Reassigned', due:'Due Today' }));
+    // Toggle back to chat
+    after(7200, () => setComposer('chat', true));
+    after(8600, () => { setMaki('', false); setScene(''); onDone(); });
+  }
+
+  // ═══════════════════════════════════════════
+  // SCENE 4: Task progress tracking
+  // ═══════════════════════════════════════════
+  function scene4(onDone) {
+    clearChat(); clearTodo();
+    setScene('Scene 4 · Task Progress');
+    switchBucketTab('todo');
+    setComposer('chat', false);
+    headerExtra.textContent = '';
+
+    // Pre-fill some tasks
+    after(200, () => {
+      const t1 = addTask('Mobile responsive layout', PROFILES[4], { due:'Due Fri' });
+      const t2 = addTask('API rate limiting', PROFILES[1], { due:'Due Thu' });
+      const t3 = addTask('User onboarding flow', PROFILES[2], { due:'Due Mon' });
+    });
+    after(1000, () => addMsg(PROFILES[1], "Rate limiting is done, pushed to staging."));
+    after(1800, () => {
+      setMaki('MAKi updating task status...', true);
+      addMsg(MAKI, '✅ Marked "API rate limiting" as <strong>Done</strong>. Notified the team.', { maki: true });
+    });
+    after(2800, () => {
+      // Visual: move card to "done" - change its style
+      const cards = todoCards.querySelectorAll('.ham-card');
+      if (cards[1]) {
+        cards[1].style.transition = 'all 0.5s';
+        cards[1].style.opacity = '0.4';
+        cards[1].querySelector('.ham-card-title').style.textDecoration = 'line-through';
+      }
+    });
+    after(3600, () => addMsg(PROFILES[4], "Mobile layout almost there, just fixing tablet breakpoints."));
+    after(4400, () => {
+      addMsg(MAKI, '📊 Sprint progress: <strong>67%</strong> complete. 2 of 6 tasks remaining. On track for Friday.', { maki: true });
+    });
+    after(5400, () => {
+      addMsg(PROFILES[0], "Great progress everyone! Let's ship this week. 🚀");
+    });
+    after(7400, () => { setMaki('', false); setScene(''); onDone(); });
+  }
+
+  // ═══════════════════════════════════════════
+  // SCENE 5: Bonus — Cross-platform sync
+  // ═══════════════════════════════════════════
+  function scene5(onDone) {
+    clearChat(); clearTodo();
+    setScene('Scene 5 · Integrations');
+    switchBucketTab('todo');
+    setComposer('chat', false);
+    headerExtra.textContent = '';
+
+    // Slack Bot message (realistic style from actual app)
+    after(400, () => {
+      addSlackMsg('Paul Shin', '#dev-only', 'GitHub connect button does nothing when I click it. Is this a known issue?');
+    });
+    after(1800, () => {
+      addMsg(PROFILES[0], "Yeah, we're on it. Hotfix should be out by tomorrow.", { tag:'replying to Slack' });
+    });
+    after(2800, () => {
+      setMaki('MAKi syncing across platforms...', true);
+    });
+    after(3400, () => {
+      // GitHub integration message
+      const ghEl = document.createElement('div');
+      ghEl.className = 'ham-msg';
+      ghEl.innerHTML = `
+        <div class="ham-msg-av" style="background:#8B5CF6;border-radius:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </div>
+        <div class="ham-msg-body">
+          <div class="ham-msg-name" style="display:flex;align-items:center;gap:6px;">GitHub
+            <span style="display:inline-flex;align-items:center;gap:3px;font-size:8px;padding:2px 7px;border-radius:4px;background:rgba(139,92,246,0.08);color:#8B5CF6;font-weight:500;">PR merged</span>
+          </div>
+          <div class="ham-msg-text">feat: add rate limiting middleware<br><span style="color:#3BAD65;">+127</span> <span style="color:#FF5F57;">−23</span> · <span style="color:#666;">Jein Song</span></div>
+        </div>`;
+      chatBody.appendChild(ghEl);
+      ghEl.className += ''; // trigger animation
+      chatBody.scrollTop = chatBody.scrollHeight;
+    });
+    after(4200, () => {
+      addMsg(MAKI, '🔗 Slack bug report → task created. GitHub PR → "API rate limiting" marked <strong>Done</strong>.', { maki: true });
+    });
+    after(4800, () => addTask('Fix GitHub connect button', PROFILES[1], { badge:'🔗 From Slack', due:'Due Tomorrow' }));
+    after(5400, () => {
+      addMsg(MAKI, '📧 Sent hotfix ETA to Paul Shin via Slack DM.', { maki: true });
+    });
+    after(7400, () => { setMaki('', false); setScene(''); onDone(); });
+  }
+
+  // ── SCENE RUNNER ──
+  const scenes = [scene1, scene2, scene3, scene4, scene5];
+  let sceneIdx = 0;
+  const sceneDots = document.querySelectorAll('.ham-scene-dot');
+
+  function updateDots(idx) {
+    sceneDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  function runScene(idx) {
+    clearTimers();
+    clearChat(); clearTodo(); clearNotes();
+    clearSlogan();
+    switchBucketTab('todo');
+    setMaki('', false);
+    setScene('');
+    headerExtra.textContent = '';
+    sceneIdx = idx;
+    updateDots(idx);
+
+    const scene = scenes[idx % scenes.length];
+
+    after(400, () => {
+      showSlogan(idx);
+      scene(() => {
+        clearSlogan();
+        after(1200, () => {
+          sceneIdx = (sceneIdx + 1) % scenes.length;
+          runScene(sceneIdx);
+        });
+      });
+    });
+  }
+
+  // Click navigation
+  sceneDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.scene);
+      runScene(idx);
+    });
+  });
+
+  // Start after page load
+  setTimeout(() => runScene(0), 1500);
 })();
 
 // ── Feature card peel (scroll-driven) ──
