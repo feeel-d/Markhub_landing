@@ -2911,7 +2911,7 @@ nav .nav-links a.nav-active { color: var(--dtxt) !important; }
   .hero-app-mock { margin-top: 24px; padding: 0 12px; }
   .ham-frame {
     grid-template-columns: 1fr;
-    height: 420px;
+    height: 520px;
     border-radius: 12px;
     overflow: hidden;
   }
@@ -8761,7 +8761,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!btn) return;
   const html = document.documentElement;
   const saved = localStorage.getItem('markhub-theme');
-  if (saved !== 'dark') { html.classList.add('light-mode');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const useDark = saved ? saved === 'dark' : prefersDark;
+  if (!useDark) { html.classList.add('light-mode');
     const moonEl = document.getElementById('themeIconMoon');
     const sunEl  = document.getElementById('themeIconSun');
     if (moonEl) moonEl.style.display = 'none';
