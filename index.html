@@ -1903,7 +1903,10 @@ canvas.flow-canvas {
   flex-direction: column;
   gap: 12px;
   overflow: hidden;
+  transition: opacity 0.3s ease;
 }
+.ham-chat-body.scene-fade { opacity: 0; }
+.ham-bucket-body.scene-fade { opacity: 0; }
 .ham-msg {
   display: flex;
   gap: 9px;
@@ -1970,6 +1973,7 @@ canvas.flow-canvas {
   display: flex;
   gap: 10px;
   overflow: hidden;
+  transition: opacity 0.3s ease;
 }
 .ham-bucket-col {
   flex: 1;
@@ -2173,6 +2177,8 @@ html.light-mode .ham-slogan-text .sl-em { color: #4A8A00; }
   cursor: pointer;
   transition: all 0.25s;
   font-family: var(--f);
+  position: relative;
+  overflow: hidden;
 }
 .ham-scene-dot:hover {
   background: rgba(255,255,255,0.08);
@@ -2186,12 +2192,31 @@ html.light-mode .ham-slogan-text .sl-em { color: #4A8A00; }
   font-weight: 500;
   letter-spacing: 0.02em;
   transition: color 0.25s;
+  position: relative;
+  z-index: 1;
 }
 .ham-scene-dot.active .ham-dot-label {
   color: #7DBD00;
 }
 .ham-scene-dot:hover .ham-dot-label {
   color: #999;
+}
+.ham-scene-dot.active.animating::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: rgba(125,189,0,0.12);
+  border-radius: inherit;
+  z-index: 0;
+  animation: pillFill var(--scene-duration, 10s) linear forwards;
+}
+@keyframes pillFill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+html.light-mode .ham-scene-dot.active.animating::after {
+  background: rgba(74,138,0,0.10);
 }
 /* ── Mobile tab bar ── */
 .ham-mobile-tabs {
@@ -4412,7 +4437,6 @@ html.light-mode .testi-role { color: #666; }
       Get Started Free
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7h9M7.5 3.5l3.5 3.5-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
-    <a href="#features" class="btn-secondary">See it in action</a>
   </div>
 
   <!-- hero app mock animation -->
@@ -7493,10 +7517,6 @@ if (overlay) {
     if (first) first.classList.add('on');
     runDemo();
   }
-  // "See it in action" button opens modal
-  document.querySelectorAll('a[href="#features"]').forEach(a => {
-    a.addEventListener('click', e => { e.preventDefault(); openModal(); });
-  });
   function closeModal() {
     overlay.classList.remove('open');
     clearDemo();
@@ -8075,30 +8095,55 @@ if (overlay) {
   let sceneIdx = 0;
   const sceneDots = document.querySelectorAll('.ham-scene-dot');
 
+  const sceneDurations = [12000, 11100, 10200, 9000, 9000]; // ms per scene (including transition gaps)
   function updateDots(idx) {
-    sceneDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    sceneDots.forEach((d, i) => {
+      d.classList.remove('active', 'animating');
+      d.style.removeProperty('--scene-duration');
+    });
+    const active = sceneDots[idx];
+    if (active) {
+      active.classList.add('active');
+      active.style.setProperty('--scene-duration', sceneDurations[idx] + 'ms');
+      // Force reflow to restart animation
+      void active.offsetWidth;
+      active.classList.add('animating');
+    }
   }
 
   function runScene(idx) {
     clearTimers();
-    clearChat(); clearTodo(); clearNotes();
-    clearSlogan();
-    switchBucketTab('todo');
-    setMaki('', false);
-    setScene('');
-    headerExtra.textContent = '';
-    sceneIdx = idx;
-    updateDots(idx);
 
-    const scene = scenes[idx % scenes.length];
+    // Fade out current content before clearing
+    chatBody.classList.add('scene-fade');
+    bucketTodo.classList.add('scene-fade');
+    bucketNotes.classList.add('scene-fade');
 
-    after(400, () => {
-      showSlogan(idx);
-      scene(() => {
-        clearSlogan();
-        after(1200, () => {
-          sceneIdx = (sceneIdx + 1) % scenes.length;
-          runScene(sceneIdx);
+    after(300, () => {
+      clearChat(); clearTodo(); clearNotes();
+      clearSlogan();
+      switchBucketTab('todo');
+      setMaki('', false);
+      setScene('');
+      headerExtra.textContent = '';
+      sceneIdx = idx;
+      updateDots(idx);
+
+      // Fade in fresh content
+      chatBody.classList.remove('scene-fade');
+      bucketTodo.classList.remove('scene-fade');
+      bucketNotes.classList.remove('scene-fade');
+
+      const scene = scenes[idx % scenes.length];
+
+      after(400, () => {
+        showSlogan(idx);
+        scene(() => {
+          clearSlogan();
+          after(1200, () => {
+            sceneIdx = (sceneIdx + 1) % scenes.length;
+            runScene(sceneIdx);
+          });
         });
       });
     });
@@ -8761,8 +8806,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!btn) return;
   const html = document.documentElement;
   const saved = localStorage.getItem('markhub-theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const useDark = saved ? saved === 'dark' : prefersDark;
+  const useDark = saved === 'dark';
   if (!useDark) { html.classList.add('light-mode');
     const moonEl = document.getElementById('themeIconMoon');
     const sunEl  = document.getElementById('themeIconSun');
